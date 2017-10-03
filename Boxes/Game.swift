@@ -49,27 +49,13 @@ class Game: NSObject, SCNSceneRendererDelegate {
     */
     func setUpEntities() {
         // Create entities with components using the factory method.
-        let redBoxEntity = makeBoxEntity(forNodeWithName: "redBox")
+        let redBoxEntity = BoxEntity.init(forNodeWithColor: NSColor.red)
         
-        let yellowBoxEntity = makeBoxEntity(forNodeWithName: "yellowBox", withParticleComponentNamed: "Fire")
+        let yellowBoxEntity = BoxEntity.init(forNodeWithColor: NSColor.yellow, withParticleComponentNamed: "Fire")
         
-        let greenBoxEntity = makeBoxEntity(forNodeWithName: "greenBox", wantsPlayerControlComponent: true)
+        let greenBoxEntity = BoxEntity.init(forNodeWithColor: NSColor.green, wantsPlayerControlComponent: true)
         
-        let blueBoxEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsPlayerControlComponent: true, withParticleComponentNamed: "Sparkle")
-
-        // Create the box entity and grab its node from the scene.
-        let purpleBoxEntity = GKEntity()
-        let purpleBoxNode = scene.rootNode.childNode(withName: "purpleBox", recursively: false)
-        
-        // Create the purple box's geometry component, and add it to the entity.
-        let geometryComponent = GeometryComponent(geometryNode: purpleBoxNode!)
-        purpleBoxEntity.addComponent(geometryComponent)
-        
-        /* 
-            Experiment for yourself:
-            Try creating and attaching a ParticleComponent and 
-            PlayerControlComponent for the purple box in the space below.
-        */
+        let blueBoxEntity = BoxEntity.init(forNodeWithColor: NSColor.blue, wantsPlayerControlComponent: true, withParticleComponentNamed: "Sparkle")
         
         // Keep track of all the newly-created box entities.
         boxEntities = [
@@ -77,8 +63,13 @@ class Game: NSObject, SCNSceneRendererDelegate {
             yellowBoxEntity,
             greenBoxEntity,
             blueBoxEntity,
-            purpleBoxEntity
         ]
+        
+        for entity in boxEntities {
+            if let geometryComponent = entity.component(ofType: GeometryComponent.self) {
+                self.scene.rootNode.addChildNode(geometryComponent.geometryNode)
+            }
+        }
     }
     
     /**
@@ -124,49 +115,5 @@ class Game: NSObject, SCNSceneRendererDelegate {
         
         // Update the previous update time to keep future calculations accurate.
         previousUpdateTime = time
-    }
-    
-    // MARK: Box Factory Method
-    
-    /**
-        Creates box entities with a set of components as specified in the 
-        parameters. It uses default parameter values so parameters can be 
-        ommitted in the method call. The parameter particleComponentName is a 
-        string optional so its default parameter value can be nil.
-    
-        - Parameter name: The name of the box that this entity should manage.
-    
-        - Parameter wantsPlayerControlComponent: Whether or not this entity 
-        should be set up with a player control component.
-    
-        - Parameter particleComponentName: The name of the particle
-        component entity should be set up with.
-    
-        - Returns: An entity with the set of components requested.
-    */
-    func makeBoxEntity(forNodeWithName name: String, wantsPlayerControlComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
-        // Create the box entity and grab its node from the scene.
-        let box = GKEntity()
-        guard let boxNode = scene.rootNode.childNode(withName: name, recursively: false) else {
-            fatalError("Making box with name \(name) failed because the GameScene scene file contains no nodes with that name.")
-        }
-        
-        // Create and attach a geometry component to the box.
-        let geometryComponent = GeometryComponent(geometryNode: boxNode)
-        box.addComponent(geometryComponent)
-        
-        // If requested, create and attach a particle component.
-        if let particleComponentName = particleComponentName {
-            let particleComponent = ParticleComponent(particleName: particleComponentName)
-            box.addComponent(particleComponent)
-        }
-        
-        // If requested, create and attach a player control component.
-        if wantsPlayerControlComponent {
-            let playerControlComponent = PlayerControlComponent()
-            box.addComponent(playerControlComponent)
-        }
-        
-        return box
     }
 }
