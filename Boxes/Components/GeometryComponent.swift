@@ -17,4 +17,5 @@ class GeometryComponent: GKSCNNodeComponent {
     func applyImpulse(_ vector: SCNVector3) {
         node.physicsBody?.applyForce(vector, asImpulse: true)
     }
+
 }

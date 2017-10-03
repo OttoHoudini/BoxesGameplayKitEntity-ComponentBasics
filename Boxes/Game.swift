@@ -115,31 +115,34 @@ class Game: NSObject, SCNSceneRendererDelegate {
     }
     
     func controlEntityFor(node: SCNNode) {
+        if let boxEntity = boxEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
+            controlledBox = boxEntity
+            
+            highlight(node: node)
+        }
+    }
+    
+    func highlight(node: SCNNode) {
+        // get its material
+        let material =  node.geometry!.firstMaterial!
         
-        if let box = boxEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
-            controlledBox = box
-            
-            // get its material
-            let material =  node.geometry!.firstMaterial!
-            
-            // highlight it
+        // highlight it
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 0.5
+        
+        // on completion - unhighlight
+        SCNTransaction.completionBlock = {
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 0.5
             
-            // on completion - unhighlight
-            SCNTransaction.completionBlock = {
-                SCNTransaction.begin()
-                SCNTransaction.animationDuration = 0.5
-                
-                material.emission.contents = NSColor.black
-                
-                SCNTransaction.commit()
-            }
-            
-            material.emission.contents = NSColor.red
+            material.emission.contents = NSColor.black
             
             SCNTransaction.commit()
         }
+        
+        material.emission.contents = NSColor.red
+        
+        SCNTransaction.commit()
     }
     
     /**
