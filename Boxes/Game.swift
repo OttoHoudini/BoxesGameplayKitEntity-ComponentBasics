@@ -26,9 +26,10 @@ class Game: NSObject, SCNSceneRendererDelegate {
         them synchronously.
     */
     let particleComponentSystem = GKComponentSystem(componentClass: ParticleComponent.self)
-    
+
     /// Holds the box entities, so they won't be deallocated.
     var boxEntities = [GKEntity]()
+    var controlledBox = GKEntity()
     
     /// Keeps track of the time for use in the update method.
     var previousUpdateTime: TimeInterval = 0
@@ -64,6 +65,8 @@ class Game: NSObject, SCNSceneRendererDelegate {
             greenBoxEntity,
             blueBoxEntity,
         ]
+        
+        controlledBox = greenBoxEntity
     }
     
     /**
@@ -92,6 +95,51 @@ class Game: NSObject, SCNSceneRendererDelegate {
             PlayerControlComponent.
         */
         for case let component as PlayerControlComponent in playerControlComponentSystem.components {
+            component.jump()
+        }
+    }
+    
+    func controlEntityWith(node: SCNNode) {
+        if let boxEntity = boxEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
+            controlledBox = boxEntity
+            
+            highlight(node: node)
+        }
+    }
+    
+    func highlight(node: SCNNode) {
+        // get its material
+        let material =  node.geometry!.firstMaterial!
+        
+        // highlight it
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 0.5
+        
+        // on completion - unhighlight
+        SCNTransaction.completionBlock = {
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = 0.5
+            
+            material.emission.contents = NSColor.black
+            
+            SCNTransaction.commit()
+        }
+        
+        material.emission.contents = NSColor.red
+        
+        SCNTransaction.commit()
+    }
+    
+    /**
+     Causes the currently controlled box controlled by an entity with a playerControlComponent
+     to jump.
+     */
+    func jumpBox() {
+        /*
+         Iterate over each component in the component system that is a
+         PlayerControlComponent.
+         */
+        for case let component as PlayerControlComponent in controlledBox.components {
             component.jump()
         }
     }

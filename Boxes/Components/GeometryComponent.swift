@@ -9,27 +9,13 @@
 import SceneKit
 import GameplayKit
 
-class GeometryComponent: GKComponent {
-    // MARK: Properties
-    
-    /// A reference to the box in the scene that the entity controls.
-    let geometryNode: SCNNode
-    
-    // MARK: Initialization
-    
-    init(geometryNode: SCNNode) {
-        self.geometryNode = geometryNode
-        super.init()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+class GeometryComponent: GKSCNNodeComponent {
     
     // MARK: Methods
     
     /// Applies an upward impulse to the entity's box node, causing it to jump.
     func applyImpulse(_ vector: SCNVector3) {
-        geometryNode.physicsBody?.applyForce(vector, asImpulse: true)
+        node.physicsBody?.applyForce(vector, asImpulse: true)
     }
+
 }
