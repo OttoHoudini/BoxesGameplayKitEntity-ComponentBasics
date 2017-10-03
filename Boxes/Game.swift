@@ -26,9 +26,10 @@ class Game: NSObject, SCNSceneRendererDelegate {
         them synchronously.
     */
     let particleComponentSystem = GKComponentSystem(componentClass: ParticleComponent.self)
-    
+
     /// Holds the box entities, so they won't be deallocated.
     var boxEntities = [GKEntity]()
+    var controlledBox = GKEntity()
     
     /// Keeps track of the time for use in the update method.
     var previousUpdateTime: TimeInterval = 0
@@ -62,7 +63,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         let purpleBoxNode = scene.rootNode.childNode(withName: "purpleBox", recursively: false)
         
         // Create the purple box's geometry component, and add it to the entity.
-        let geometryComponent = GeometryComponent(geometryNode: purpleBoxNode!)
+        let geometryComponent = GeometryComponent(node: purpleBoxNode!)
         purpleBoxEntity.addComponent(geometryComponent)
         
         /* 
@@ -79,6 +80,8 @@ class Game: NSObject, SCNSceneRendererDelegate {
             blueBoxEntity,
             purpleBoxEntity
         ]
+        
+        controlledBox = greenBoxEntity
     }
     
     /**
@@ -107,6 +110,48 @@ class Game: NSObject, SCNSceneRendererDelegate {
             PlayerControlComponent.
         */
         for case let component as PlayerControlComponent in playerControlComponentSystem.components {
+            component.jump()
+        }
+    }
+    
+    func controlEntityFor(node: SCNNode) {
+        
+        if let box = boxEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
+            controlledBox = box
+            
+            // get its material
+            let material =  node.geometry!.firstMaterial!
+            
+            // highlight it
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = 0.5
+            
+            // on completion - unhighlight
+            SCNTransaction.completionBlock = {
+                SCNTransaction.begin()
+                SCNTransaction.animationDuration = 0.5
+                
+                material.emission.contents = NSColor.black
+                
+                SCNTransaction.commit()
+            }
+            
+            material.emission.contents = NSColor.red
+            
+            SCNTransaction.commit()
+        }
+    }
+    
+    /**
+     Causes the currently controlled box controlled by an entity with a playerControlComponent
+     to jump.
+     */
+    func jumpBox() {
+        /*
+         Iterate over each component in the component system that is a
+         PlayerControlComponent.
+         */
+        for case let component as PlayerControlComponent in controlledBox.components {
             component.jump()
         }
     }
@@ -152,7 +197,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         }
         
         // Create and attach a geometry component to the box.
-        let geometryComponent = GeometryComponent(geometryNode: boxNode)
+        let geometryComponent = GeometryComponent(node: boxNode)
         box.addComponent(geometryComponent)
         
         // If requested, create and attach a particle component.

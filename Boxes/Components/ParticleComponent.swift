@@ -99,8 +99,8 @@ class ParticleComponent: GKComponent {
             and light to the box node.
         */
         if let geometryComponent = geometryComponent, !boxHasParticleEffect {
-            geometryComponent.geometryNode.addParticleSystem(particleEmitter)
-            geometryComponent.geometryNode.light = boxLight
+            geometryComponent.node.addParticleSystem(particleEmitter)
+            geometryComponent.node.light = boxLight
         }
         
         /*

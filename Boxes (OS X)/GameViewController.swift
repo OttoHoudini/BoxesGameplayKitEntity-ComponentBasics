@@ -27,15 +27,38 @@ class GameViewController: NSViewController {
         
         // Ensure the game can manage updates for the scene.
         scnView.delegate = game
+        
+        // Add a click gesture recognizer
+        let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(handleClick(_:)))
+        clickGesture.buttonMask = 0x2
+        var gestureRecognizers = scnView.gestureRecognizers
+        gestureRecognizers.insert(clickGesture, at: 0)
+        scnView.gestureRecognizers = gestureRecognizers
     }
     
     override func keyDown(with _: NSEvent) {
         // Causes boxes to jump if a key press is detected.
-        game.jumpBoxes()
+        game.jumpBox()
     }
     
     override func mouseDown(with _: NSEvent) {
-        // Causes boxes to jump if a click is detected.
+        // Causes boxes to jump if mouse is clicked.
         game.jumpBoxes()
+    }
+    
+    @objc
+    func handleClick(_ gestureRecognizer: NSGestureRecognizer) {
+        // retrieve the SCNView
+        let scnView = self.view as! SCNView
+        
+        // check what nodes are clicked
+        let p = gestureRecognizer.location(in: scnView)
+        let hitResults = scnView.hitTest(p, options: [:])
+        
+        // check that we clicked on at least one object
+        if hitResults.count > 0 {
+            // retrieved the first clicked object
+            game.controlEntityFor(node: hitResults.first!.node)
+        }
     }
 }
