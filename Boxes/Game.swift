@@ -64,12 +64,6 @@ class Game: NSObject, SCNSceneRendererDelegate {
             greenBoxEntity,
             blueBoxEntity,
         ]
-        
-        for entity in boxEntities {
-            if let geometryComponent = entity.component(ofType: GeometryComponent.self) {
-                self.scene.rootNode.addChildNode(geometryComponent.geometryNode)
-            }
-        }
     }
     
     /**
