@@ -114,7 +114,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         }
     }
     
-    func controlEntityFor(node: SCNNode) {
+    func controlEntityWith(node: SCNNode) {
         if let boxEntity = boxEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
             controlledBox = boxEntity
             

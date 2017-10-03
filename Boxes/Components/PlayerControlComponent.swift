@@ -22,6 +22,6 @@ class PlayerControlComponent: GKComponent {
     /// Tells this entity's geometry component to jump.
     func jump() {
         let jumpVector = SCNVector3(x: 0, y: 2, z: 0)
-        geometryComponent?.applyImpulse(jumpVector, asImpulse: true)
+        geometryComponent?.applyImpulse(jumpVector)
     }
 }

@@ -58,7 +58,7 @@ class GameViewController: NSViewController {
         // check that we clicked on at least one object
         if hitResults.count > 0 {
             // retrieved the first clicked object
-            game.controlEntityFor(node: hitResults.first!.node)
+            game.controlEntityWith(node: hitResults.first!.node)
         }
     }
 }
