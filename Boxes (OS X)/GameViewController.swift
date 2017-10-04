@@ -36,9 +36,19 @@ class GameViewController: NSViewController {
         scnView.gestureRecognizers = gestureRecognizers
     }
     
-    override func keyDown(with _: NSEvent) {
-        // Causes boxes to jump if a key press is detected.
-        game.jumpBox()
+    override func keyDown(with event: NSEvent) {
+        // Activates the box's engine.
+        
+        if !event.isARepeat {
+            game.toggleEngine()
+        }
+    }
+    
+    override func keyUp(with event: NSEvent) {
+        // disables the box's engine.
+        if !event.isARepeat {
+            game.toggleEngine()
+        }
     }
     
     override func mouseDown(with _: NSEvent) {

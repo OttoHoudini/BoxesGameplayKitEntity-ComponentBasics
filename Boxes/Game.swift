@@ -27,6 +27,12 @@ class Game: NSObject, SCNSceneRendererDelegate {
     */
     let particleComponentSystem = GKComponentSystem(componentClass: ParticleComponent.self)
 
+    /**
+     Manages all of the thrust components, allowing you to update all of
+     them synchronously.
+     */
+    let thrustComponentSystem = GKComponentSystem(componentClass: ThrustComponent.self)
+    
     /// Holds the box entities, so they won't be deallocated.
     var boxEntities = [GKEntity]()
     var controlledBox = GKEntity()
@@ -55,7 +61,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         
         let yellowBoxEntity = makeBoxEntity(forNodeWithName: "yellowBox", withParticleComponentNamed: "Fire")
         
-        let greenBoxEntity = makeBoxEntity(forNodeWithName: "greenBox", wantsPlayerControlComponent: true)
+        let greenBoxEntity = makeBoxEntity(forNodeWithName: "greenBox", wantsPlayerControlComponent: true, wantsThrustComponent: true)
         
         let blueBoxEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsPlayerControlComponent: true, withParticleComponentNamed: "Sparkle")
 
@@ -96,6 +102,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         for box in boxEntities {
             particleComponentSystem.addComponent(foundIn: box)
             playerControlComponentSystem.addComponent(foundIn: box)
+            thrustComponentSystem.addComponent(foundIn: box)
         }
     }
     
@@ -107,12 +114,14 @@ class Game: NSObject, SCNSceneRendererDelegate {
      to jump.
      */
     func jumpBox() {
-        /*
-         Iterate over each component in the component system that is a
-         PlayerControlComponent.
-         */
         for case let component as PlayerControlComponent in controlledBox.components {
             component.jump()
+        }
+    }
+    
+    func toggleEngine() {
+        for case let component as PlayerControlComponent in controlledBox.components {
+            component.toggleEngine()
         }
     }
     
@@ -133,7 +142,6 @@ class Game: NSObject, SCNSceneRendererDelegate {
     func controlEntityWith(node: SCNNode) {
         if let boxEntity = boxEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
             controlledBox = boxEntity
-            
             highlight(node: node)
         }
     }
@@ -172,6 +180,9 @@ class Game: NSObject, SCNSceneRendererDelegate {
         // Update the particle component system with the time change.
         particleComponentSystem.update(deltaTime: timeSincePreviousUpdate)
         
+        // Update the thrust component system with the time change.
+        thrustComponentSystem.update(deltaTime: timeSincePreviousUpdate)
+        
         // Update the previous update time to keep future calculations accurate.
         previousUpdateTime = time
     }
@@ -195,7 +206,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
     
         - Returns: An entity with the set of components requested.
     */
-    func makeBoxEntity(forNodeWithName name: String, wantsPlayerControlComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
+    func makeBoxEntity(forNodeWithName name: String, wantsPlayerControlComponent: Bool = false, wantsThrustComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
         // Create the box entity and grab its node from the scene.
         let box = GKEntity()
         guard let boxNode = scene.rootNode.childNode(withName: name, recursively: false) else {
@@ -210,6 +221,12 @@ class Game: NSObject, SCNSceneRendererDelegate {
         if let particleComponentName = particleComponentName {
             let particleComponent = ParticleComponent(particleName: particleComponentName)
             box.addComponent(particleComponent)
+        }
+        
+        // If requested, create and attach a thrust component.
+        if wantsThrustComponent {
+            let thrustComponent = ThrustComponent()
+            box.addComponent(thrustComponent)
         }
         
         // If requested, create and attach a player control component.

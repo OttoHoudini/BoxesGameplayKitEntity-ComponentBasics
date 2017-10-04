@@ -17,5 +17,9 @@ class GeometryComponent: GKSCNNodeComponent {
     func applyImpulse(_ vector: SCNVector3) {
         node.physicsBody?.applyForce(vector, asImpulse: true)
     }
-
+    
+    /// Applies an upward force the entity's box node, causing it to accelerate.
+    func applyForce(_ vector: SCNVector3) {
+        node.physicsBody?.applyForce(vector, asImpulse: false)
+    }
 }
