@@ -14,7 +14,8 @@ import SceneKit
 
 class PlayerControlComponent: GKComponent {
     // MARK: Properties
-
+    var changeThrottle = 0.0
+    
     /// A convenience property for the entity's geometry component.
     var geometryComponent: GeometryComponent? {
         return entity?.component(ofType: GeometryComponent.self)
@@ -35,10 +36,11 @@ class PlayerControlComponent: GKComponent {
     }
     
     /// Causes the entity to accelerate
-    func toggleEngine() {
-        thrustComponent?.magnitude = thrustComponent?.magnitude == 0.0 ? 1.5 : 0.0
+    func setThrottle(state: ThrustComponent.State) {
+        thrustComponent?.state = state
     }
 }
+
 
 // MARK: -
 // MARK: ThrustComponent
@@ -46,8 +48,19 @@ class PlayerControlComponent: GKComponent {
 class ThrustComponent: GKComponent {
     // MARK: Properties
     
+    enum State {
+        case off
+        case up
+        case down
+        case hold
+    }
+    
+    var state = State.off
+    
+    let maxThrust: Double
+
     /// The direction the thrust is applied.
-    var directionVector = simd_double3(0, 1, 0)
+    let directionVector = simd_double3(0, 1, 0)
     
     /// The magnitude of the thrust applied.
     var magnitude = 0.0
@@ -57,13 +70,51 @@ class ThrustComponent: GKComponent {
         return entity?.component(ofType: GeometryComponent.self)
     }
     
+    init(maxThrust: Double) {
+        self.maxThrust = maxThrust
+        
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: -
     // MARK: Methods
     
     override func update(deltaTime seconds: TimeInterval) {
+        let amount = 1.0 * seconds
+        
+        switch state {
+        case .off:
+            magnitude = 0.0
+            
+        case .up:
+            magnitude += amount
+            
+        case .down:
+            magnitude -= amount
+            
+        case .hold:
+            print("Holding throttle")
+        }
+        
+        magnitude = (0.0 ... 1.0).clamp(magnitude)
+        
         if magnitude > 0 {
-            let thrustVector = directionVector * magnitude
+            print(magnitude)
+
+            let thrustVector = directionVector * (magnitude * maxThrust)
             geometryComponent?.applyForce(SCNVector3(thrustVector))
         }
+    }
+}
+
+extension ClosedRange {
+    func clamp(_ value : Bound) -> Bound {
+        return self.lowerBound > value ? self.lowerBound
+            : self.upperBound < value ? self.upperBound
+            : value
     }
 }

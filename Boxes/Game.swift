@@ -108,34 +108,10 @@ class Game: NSObject, SCNSceneRendererDelegate {
     
     // MARK: -
     // MARK: Methods
-    
-    /**
-     Causes the currently controlled entity box to jump if controlled by a playerControlComponent
-     to jump.
-     */
-    func jumpBox() {
+
+    func setThrottle(state: ThrustComponent.State) {
         for case let component as PlayerControlComponent in controlledBox.components {
-            component.jump()
-        }
-    }
-    
-    func toggleEngine() {
-        for case let component as PlayerControlComponent in controlledBox.components {
-            component.toggleEngine()
-        }
-    }
-    
-    /**
-        Causes each box controlled by an entity with a playerControlComponent
-        to jump.
-    */
-    func jumpBoxes() {
-        /*
-            Iterate over each component in the component system that is a
-            PlayerControlComponent.
-        */
-        for case let component as PlayerControlComponent in playerControlComponentSystem.components {
-            component.jump()
+            component.setThrottle(state: state)
         }
     }
     
@@ -225,7 +201,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         
         // If requested, create and attach a thrust component.
         if wantsThrustComponent {
-            let thrustComponent = ThrustComponent()
+            let thrustComponent = ThrustComponent(maxThrust: 1.125)
             box.addComponent(thrustComponent)
         }
         

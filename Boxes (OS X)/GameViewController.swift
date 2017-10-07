@@ -12,6 +12,7 @@ class GameViewController: NSViewController {
     // MARK: Properties
     
     let game = Game()
+//    var modifierPressed: ?
     
     // MARK: Methods
     
@@ -36,26 +37,25 @@ class GameViewController: NSViewController {
         scnView.gestureRecognizers = gestureRecognizers
     }
     
+    override func flagsChanged(with event: NSEvent) {
+        if event.modifierFlags.contains(.shift) {
+            game.setThrottle(state: .up)
+
+        } else if event.modifierFlags.contains(.control) {
+            game.setThrottle(state: .down)
+
+        } else {
+            game.setThrottle(state: .hold)
+        }
+    }
+    
+    
     override func keyDown(with event: NSEvent) {
-        // Activates the box's engine.
-        
-        if !event.isARepeat {
-            game.toggleEngine()
+        if event.characters == "z" {
+            game.setThrottle(state: .off)
         }
     }
-    
-    override func keyUp(with event: NSEvent) {
-        // disables the box's engine.
-        if !event.isARepeat {
-            game.toggleEngine()
-        }
-    }
-    
-    override func mouseDown(with _: NSEvent) {
-        // Causes boxes to jump if mouse is clicked.
-        game.jumpBoxes()
-    }
-    
+
     @objc
     func handleClick(_ gestureRecognizer: NSGestureRecognizer) {
         // retrieve the SCNView
