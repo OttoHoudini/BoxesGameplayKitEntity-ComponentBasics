@@ -14,7 +14,6 @@ import SceneKit
 
 class PlayerControlComponent: GKComponent {
     // MARK: Properties
-    var changeThrottle = 0.0
     
     /// A convenience property for the entity's geometry component.
     var geometryComponent: GeometryComponent? {
@@ -46,7 +45,6 @@ class PlayerControlComponent: GKComponent {
 // MARK: ThrustComponent
 
 class ThrustComponent: GKComponent {
-    // MARK: Properties
     
     enum State {
         case off
@@ -55,6 +53,8 @@ class ThrustComponent: GKComponent {
         case hold
     }
     
+    // MARK: Properties
+
     var state = State.off
     
     let maxThrust: Double
