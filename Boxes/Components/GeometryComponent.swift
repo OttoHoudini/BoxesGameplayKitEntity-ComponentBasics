@@ -13,13 +13,7 @@ class GeometryComponent: GKSCNNodeComponent {
     
     // MARK: Methods
     
-    /// Applies an upward impulse to the entity's box node, causing it to jump.
-    func applyImpulse(_ vector: SCNVector3) {
-        node.physicsBody?.applyForce(vector, asImpulse: true)
-    }
-    
-    /// Applies an upward force the entity's box node, causing it to accelerate.
-    func applyForce(_ vector: SCNVector3) {
-        node.physicsBody?.applyForce(vector, asImpulse: false)
+    func applyForce(_ direction: SCNVector3, asImpulse impulse: Bool) {
+        node.physicsBody?.applyForce(direction, asImpulse: impulse)
     }
 }
