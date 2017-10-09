@@ -7,7 +7,6 @@
 */
 
 import GameplayKit
-import SceneKit
 
 // MARK: -
 // MARK: PlayerControlComponent

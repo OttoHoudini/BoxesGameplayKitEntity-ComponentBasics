@@ -20,6 +20,9 @@
 		11D279691BFAEA420063A526 /* Sparkle.scnp in Resources */ = {isa = PBXBuildFile; fileRef = A464404C1B4218F50075ABE4 /* Sparkle.scnp */; };
 		11D2796A1BFAEA420063A526 /* starburst.png in Resources */ = {isa = PBXBuildFile; fileRef = A478E8AD1B57328B000EB4CF /* starburst.png */; };
 		11D2796B1BFAEA420063A526 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4978FB51B41C4EF0059626E /* Assets.xcassets */; };
+		1F0A12D21F8A625300EC2BE0 /* FuelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */; };
+		1F0A12D31F8A625300EC2BE0 /* FuelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */; };
+		1F0A12D41F8A625300EC2BE0 /* FuelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */; };
 		1F2CDAED1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
 		1F2CDAEE1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
 		1F2CDAEF1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
@@ -56,6 +59,7 @@
 		11D2794B1BFAE7E70063A526 /* Boxes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Boxes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11D279581BFAE7E70063A526 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11D2795C1BFAE7E70063A526 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelComponent.swift; sourceTree = "<group>"; };
 		1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrustComponent.swift; sourceTree = "<group>"; };
 		A413E90E1B41F11000C6E371 /* PlayerControlComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerControlComponent.swift; sourceTree = "<group>"; };
 		A413E9101B41F11A00C6E371 /* ParticleComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleComponent.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 				A413E90E1B41F11000C6E371 /* PlayerControlComponent.swift */,
 				A413E9101B41F11A00C6E371 /* ParticleComponent.swift */,
 				1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */,
+				1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */,
 			);
 			name = Components;
 			path = Boxes/Components;
@@ -351,6 +356,7 @@
 				11D279621BFAEA420063A526 /* Game.swift in Sources */,
 				11D279611BFAE9E00063A526 /* GameViewController.swift in Sources */,
 				1F2CDAEF1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
+				1F0A12D41F8A625300EC2BE0 /* FuelComponent.swift in Sources */,
 				11D279641BFAEA420063A526 /* PlayerControlComponent.swift in Sources */,
 				11D279651BFAEA420063A526 /* ParticleComponent.swift in Sources */,
 			);
@@ -365,6 +371,7 @@
 				A413E9131B41F34B00C6E371 /* GeometryComponent.swift in Sources */,
 				A413E9111B41F11A00C6E371 /* ParticleComponent.swift in Sources */,
 				1F2CDAEE1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
+				1F0A12D31F8A625300EC2BE0 /* FuelComponent.swift in Sources */,
 				A4440BBB1B6C3C8A0070765D /* GameViewController.swift in Sources */,
 				A4978FAE1B41C4EF0059626E /* AppDelegate.swift in Sources */,
 			);
@@ -379,6 +386,7 @@
 				A4AA55211B69BEBC008D3323 /* GeometryComponent.swift in Sources */,
 				A4440BB71B6C38980070765D /* Game.swift in Sources */,
 				1F2CDAED1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
+				1F0A12D21F8A625300EC2BE0 /* FuelComponent.swift in Sources */,
 				A4AA55221B69BEBC008D3323 /* PlayerControlComponent.swift in Sources */,
 				A4AA55231B69BEBC008D3323 /* ParticleComponent.swift in Sources */,
 			);
