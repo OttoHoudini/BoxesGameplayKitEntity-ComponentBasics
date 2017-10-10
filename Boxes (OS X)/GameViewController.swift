@@ -12,7 +12,6 @@ class GameViewController: NSViewController {
     // MARK: Properties
     
     let game = Game()
-//    var modifierPressed: ?
     
     // MARK: Methods
     
@@ -38,17 +37,16 @@ class GameViewController: NSViewController {
     }
     
     override func flagsChanged(with event: NSEvent) {
-        if event.modifierFlags.contains(NSEvent.ModifierFlags.shift) {
+        if event.modifierFlags.contains(.shift) {
             game.setThrottle(state: .up)
 
-        } else if event.modifierFlags.contains(NSEvent.ModifierFlags.control) {
+        } else if event.modifierFlags.contains(.control) {
             game.setThrottle(state: .down)
 
         } else {
             game.setThrottle(state: .hold)
         }
     }
-    
     
     override func keyDown(with event: NSEvent) {
         if event.characters == "z" {
