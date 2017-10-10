@@ -277,7 +277,7 @@
 					};
 					A4978FA91B41C4EF0059626E = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					A4B76F3C1B698E4F005B1902 = {
 						CreatedOnToolsVersion = 7.0;
@@ -570,7 +570,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.Boxes";
 				PRODUCT_NAME = Boxes;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -584,7 +585,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.Boxes";
 				PRODUCT_NAME = Boxes;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

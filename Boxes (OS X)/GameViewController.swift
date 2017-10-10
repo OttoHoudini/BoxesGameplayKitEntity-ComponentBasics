@@ -38,10 +38,10 @@ class GameViewController: NSViewController {
     }
     
     override func flagsChanged(with event: NSEvent) {
-        if event.modifierFlags.contains(.shift) {
+        if event.modifierFlags.contains(NSEvent.ModifierFlags.shift) {
             game.setThrottle(state: .up)
 
-        } else if event.modifierFlags.contains(.control) {
+        } else if event.modifierFlags.contains(NSEvent.ModifierFlags.control) {
             game.setThrottle(state: .down)
 
         } else {
