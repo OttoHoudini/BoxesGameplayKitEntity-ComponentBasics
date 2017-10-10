@@ -34,8 +34,9 @@ class Game: NSObject, SCNSceneRendererDelegate {
     let thrustComponentSystem = GKComponentSystem(componentClass: ThrustComponent.self)
     
     /// Holds the box entities, so they won't be deallocated.
-    var boxEntities = [GKEntity]()
-    var controlledBox = GKEntity()
+    let rocket = Rocket()
+//    var boxEntities = [GKEntity]()
+    var controlEntity = GKEntity()
     
     /// Keeps track of the time for use in the update method.
     var previousUpdateTime: TimeInterval = 0
@@ -80,7 +81,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         */
         
         // Keep track of all the newly-created box entities.
-        boxEntities = [
+        rocket.entities = [
             redBoxEntity,
             yellowBoxEntity,
             greenBoxEntity,
@@ -88,7 +89,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
             purpleBoxEntity
         ]
         
-        controlledBox = greenBoxEntity
+        controlEntity = greenBoxEntity
     }
     
     /**
@@ -99,7 +100,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         the scene unless it is added to one of these systems.
     */
     func addComponentsToComponentSystems() {
-        for box in boxEntities {
+        for box in rocket.entities {
             particleComponentSystem.addComponent(foundIn: box)
             playerControlComponentSystem.addComponent(foundIn: box)
             thrustComponentSystem.addComponent(foundIn: box)
@@ -110,14 +111,14 @@ class Game: NSObject, SCNSceneRendererDelegate {
     // MARK: Methods
 
     func setThrottle(state: ThrustComponent.State) {
-        for case let component as PlayerControlComponent in controlledBox.components {
+        for case let component as PlayerControlComponent in controlEntity.components {
             component.setThrottle(state: state)
         }
     }
     
     func controlEntityWith(node: SCNNode) {
-        if let boxEntity = boxEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
-            controlledBox = boxEntity
+        if let partEntity = rocket.entities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
+            controlEntity = partEntity
             highlight(node: node)
         }
     }

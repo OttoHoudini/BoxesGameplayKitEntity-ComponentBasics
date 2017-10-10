@@ -26,6 +26,9 @@
 		1F2CDAED1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
 		1F2CDAEE1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
 		1F2CDAEF1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
+		1FE71EC01F8C696D008B0F11 /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* Rocket.swift */; };
+		1FE71EC11F8C696D008B0F11 /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* Rocket.swift */; };
+		1FE71EC21F8C696D008B0F11 /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* Rocket.swift */; };
 		A413E90F1B41F11000C6E371 /* PlayerControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A413E90E1B41F11000C6E371 /* PlayerControlComponent.swift */; };
 		A413E9111B41F11A00C6E371 /* ParticleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A413E9101B41F11A00C6E371 /* ParticleComponent.swift */; };
 		A413E9131B41F34B00C6E371 /* GeometryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A413E9121B41F34B00C6E371 /* GeometryComponent.swift */; };
@@ -61,6 +64,7 @@
 		11D2795C1BFAE7E70063A526 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelComponent.swift; sourceTree = "<group>"; };
 		1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrustComponent.swift; sourceTree = "<group>"; };
+		1FE71EBF1F8C696D008B0F11 /* Rocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
 		A413E90E1B41F11000C6E371 /* PlayerControlComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerControlComponent.swift; sourceTree = "<group>"; };
 		A413E9101B41F11A00C6E371 /* ParticleComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleComponent.swift; sourceTree = "<group>"; };
 		A413E9121B41F34B00C6E371 /* GeometryComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometryComponent.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				A4440BB51B6C38980070765D /* Game.swift */,
+				1FE71EBF1F8C696D008B0F11 /* Rocket.swift */,
 				A413E9051B41F04500C6E371 /* Components */,
 				A4978FDC1B41C55D0059626E /* GameScene.scn */,
 				A4440BBC1B6C57150070765D /* Particle Effects */,
@@ -351,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE71EC21F8C696D008B0F11 /* Rocket.swift in Sources */,
 				11D279601BFAE9E00063A526 /* AppDelegate.swift in Sources */,
 				11D279631BFAEA420063A526 /* GeometryComponent.swift in Sources */,
 				11D279621BFAEA420063A526 /* Game.swift in Sources */,
@@ -366,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE71EC11F8C696D008B0F11 /* Rocket.swift in Sources */,
 				A4440BB61B6C38980070765D /* Game.swift in Sources */,
 				A413E90F1B41F11000C6E371 /* PlayerControlComponent.swift in Sources */,
 				A413E9131B41F34B00C6E371 /* GeometryComponent.swift in Sources */,
@@ -381,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE71EC01F8C696D008B0F11 /* Rocket.swift in Sources */,
 				A47E87D61B6FCD1000F9A307 /* GameViewController.swift in Sources */,
 				A47E87D51B6FCD0A00F9A307 /* AppDelegate.swift in Sources */,
 				A4AA55211B69BEBC008D3323 /* GeometryComponent.swift in Sources */,
