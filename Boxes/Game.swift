@@ -59,11 +59,11 @@ class Game: NSObject, SCNSceneRendererDelegate {
         // Create entities with components using the factory method.
         let redBoxEntity = makeBoxEntity(forNodeWithName: "redBox")
         
-        let yellowBoxEntity = makeBoxEntity(forNodeWithName: "yellowBox", withParticleComponentNamed: "Fire")
+        let yellowBoxEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsPlayerControlComponent: true, wantsThrustComponent: true, withParticleComponentNamed: "Fire")
         
-        let greenBoxEntity = makeBoxEntity(forNodeWithName: "greenBox", wantsPlayerControlComponent: true, wantsThrustComponent: true)
+        let greenBoxEntity = makeBoxEntity(forNodeWithName: "greenBox", wantsThrustComponent: true)
         
-        let blueBoxEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsPlayerControlComponent: true, withParticleComponentNamed: "Sparkle")
+        let blueBoxEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsPlayerControlComponent: true, wantsThrustComponent: true, withParticleComponentNamed: "Sparkle")
 
         // Create the box entity and grab its node from the scene.
         let purpleBoxEntity = GKEntity()
@@ -152,7 +152,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
     func renderer(_: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         // Calculate the time change since the previous update.
         let timeSincePreviousUpdate = time - previousUpdateTime
-        
+
         // Update the particle component system with the time change.
         particleComponentSystem.update(deltaTime: timeSincePreviousUpdate)
         

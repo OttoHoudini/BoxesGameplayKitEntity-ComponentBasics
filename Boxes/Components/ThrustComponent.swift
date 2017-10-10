@@ -21,14 +21,15 @@ class ThrustComponent: GKComponent {
     
     var state = State.off
     
+    /// The magnitude of the thrust applied.
+    var magnitude = 0.0
+
     let maxThrust: Double
     
     /// The direction the thrust is applied.
     let directionVector = simd_double3(0, 1, 0)
     
-    /// The magnitude of the thrust applied.
-    var magnitude = 0.0
-    
+
     /// A convenience property for the entity's geometry component.
     var geometryComponent: GeometryComponent? {
         return entity?.component(ofType: GeometryComponent.self)
