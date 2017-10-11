@@ -60,7 +60,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         // Create entities with components using the factory method.
         let redBoxEntity = makeBoxEntity(forNodeWithName: "redBox")
         
-        let yellowBoxEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsPlayerControlComponent: true, wantsThrustComponent: true, withParticleComponentNamed: "Fire")
+        let yellowBoxEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsPlayerControlComponent: true, wantsThrustComponent: true, wantsFuelComponent: true, withParticleComponentNamed: "Fire")
         
         let greenBoxEntity = makeBoxEntity(forNodeWithName: "greenBox", wantsThrustComponent: true)
         
@@ -183,7 +183,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
     
         - Returns: An entity with the set of components requested.
     */
-    func makeBoxEntity(forNodeWithName name: String, wantsPlayerControlComponent: Bool = false, wantsThrustComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
+    func makeBoxEntity(forNodeWithName name: String, wantsPlayerControlComponent: Bool = false, wantsThrustComponent: Bool = false, wantsFuelComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
         // Create the box entity and grab its node from the scene.
         let box = GKEntity()
         guard let boxNode = scene.rootNode.childNode(withName: name, recursively: false) else {
@@ -210,6 +210,11 @@ class Game: NSObject, SCNSceneRendererDelegate {
         if wantsPlayerControlComponent {
             let playerControlComponent = PlayerControlComponent()
             box.addComponent(playerControlComponent)
+        }
+        
+        if wantsFuelComponent {
+            let fuelComponent = FuelComponent.init(maxAmount: 10)
+            box.addComponent(fuelComponent)
         }
         
         return box

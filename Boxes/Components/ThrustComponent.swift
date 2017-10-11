@@ -35,6 +35,10 @@ class ThrustComponent: GKComponent {
         return entity?.component(ofType: GeometryComponent.self)
     }
     
+    var fuelComponent: FuelComponent? {
+        return entity?.component(ofType: FuelComponent.self)
+    }
+    
     init(maxThrust: Double) {
         self.maxThrust = maxThrust
         
@@ -49,17 +53,15 @@ class ThrustComponent: GKComponent {
     // MARK: Methods
     
     override func update(deltaTime seconds: TimeInterval) {
-        let amount = 1.0 * seconds
-        
         switch state {
         case .off:
             magnitude = 0.0
             
         case .up:
-            magnitude += amount
+            magnitude += 1.0 * seconds
             
         case .down:
-            magnitude -= amount
+            magnitude -= 1.0 * seconds
             
         case .hold:
             break
@@ -67,8 +69,10 @@ class ThrustComponent: GKComponent {
         
         magnitude = (0.0 ... 1.0).clamp(magnitude)
         
-        if magnitude > 0 {
-            print("Appling thrust at: \(String(format:"%.2f", magnitude))%")
+        if magnitude > 0, self.fuelComponent != nil, !fuelComponent!.isEmpty  {
+            print("Throttle:  %\(magnitude);  Remaining Fuel:  \(fuelComponent!.remainingAmount)")
+            
+            fuelComponent?.consumeFuel(amount: 1 * magnitude * seconds)
             
             let thrustVector = directionVector * (magnitude * maxThrust)
             geometryComponent?.applyForce(SCNVector3(thrustVector), asImpulse: false)
