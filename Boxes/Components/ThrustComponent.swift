@@ -10,37 +10,22 @@ import GameplayKit
 
 class ThrustComponent: GKComponent {
     
-    enum State {
-        case off
-        case up
-        case down
-        case hold
-    }
-    
     // MARK: Properties
-    
-    var state = State.off
-    
-    /// The magnitude of the thrust applied.
-    var magnitude = 0.0
+    let throttle: ThrottleComponent
 
     let maxThrust: Double
     
     /// The direction the thrust is applied.
     let directionVector = simd_double3(0, 1, 0)
     
-
     /// A convenience property for the entity's geometry component.
     var geometryComponent: GeometryComponent? {
         return entity?.component(ofType: GeometryComponent.self)
     }
     
-    var fuelComponent: FuelComponent? {
-        return entity?.component(ofType: FuelComponent.self)
-    }
-    
-    init(maxThrust: Double) {
+    init(maxThrust: Double, throttleComponent: ThrottleComponent) {
         self.maxThrust = maxThrust
+        self.throttle = throttleComponent
         
         super.init()
     }
@@ -53,32 +38,14 @@ class ThrustComponent: GKComponent {
     // MARK: Methods
     
     override func update(deltaTime seconds: TimeInterval) {
-        switch state {
-        case .off:
-            magnitude = 0.0
-            
-        case .up:
-            magnitude += 1.0 * seconds
-            
-        case .down:
-            magnitude -= 1.0 * seconds
-            
-        case .hold:
-            break
-        }
-        
-        magnitude = (0.0 ... 1.0).clamp(magnitude)
-        
-        if magnitude > 0, self.fuelComponent != nil, !fuelComponent!.isEmpty  {
-            print("Throttle:  %\(magnitude);  Remaining Fuel:  \(fuelComponent!.remainingAmount)")
-            
-            fuelComponent?.consumeFuel(amount: 1 * magnitude * seconds)
-            
-            let thrustVector = directionVector * (magnitude * maxThrust)
+   
+        if throttle.percent > 0, throttle.hasFuel()  {            
+            let thrustVector = directionVector * (throttle.percent * maxThrust)
             geometryComponent?.applyForce(SCNVector3(thrustVector), asImpulse: false)
         }
     }
 }
+
 
 extension ClosedRange {
     func clamp(_ value : Bound) -> Bound {

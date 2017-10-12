@@ -21,12 +21,15 @@ class FuelComponent: GKComponent {
     /// Determines if the fuel tank is empty
     var isEmpty: Bool { get { return remainingAmount == 0.0 } }
     
+    let throttle: ThrottleComponent
+
     //MARK: -
     //MARK: Methods
     
-    init(maxAmount: Double) {
+    init(maxAmount: Double, throttleComponent: ThrottleComponent) {
         self.maxAmount = maxAmount
         self.remainingAmount = maxAmount
+        self.throttle = throttleComponent
         
         super.init()
     }
@@ -39,5 +42,9 @@ class FuelComponent: GKComponent {
         if remainingAmount > 0.0 {
             remainingAmount = (0.0 ... maxAmount).clamp(remainingAmount - amount)
         }
+    }
+    
+    override func update(deltaTime seconds: TimeInterval) {
+        consumeFuel(amount: 1 * throttle.percent * seconds)
     }
 }

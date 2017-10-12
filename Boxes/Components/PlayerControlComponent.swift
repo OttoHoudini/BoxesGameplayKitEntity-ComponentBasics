@@ -22,7 +22,7 @@ class PlayerControlComponent: GKComponent {
     // MARK: Methods
     
     /// Causes the entity to accelerate
-    func setThrottle(state: ThrustComponent.State) {
-        thrustComponent?.state = state
-    }
+//    func setThrottle(state: ThrustComponent.State) {
+//        thrustComponent?.state = state
+//    }
 }
