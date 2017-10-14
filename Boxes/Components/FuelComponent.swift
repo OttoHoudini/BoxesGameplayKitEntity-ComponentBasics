@@ -8,7 +8,7 @@
 
 import GameplayKit
 
-class FuelComponent: GKComponent {
+class FuelComponent: RocketComponent {
     
     //MARK: Properties
     
@@ -18,33 +18,26 @@ class FuelComponent: GKComponent {
     /// The remaining fuel in the component
     var remainingAmount: Double
     
-    /// Determines if the fuel tank is empty
-    var isEmpty: Bool { get { return remainingAmount == 0.0 } }
-    
-    let throttle: ThrottleComponent
-
     //MARK: -
     //MARK: Methods
     
-    init(maxAmount: Double, throttleComponent: ThrottleComponent) {
+    init(rocket: RocketEntity? = nil, maxAmount: Double) {
         self.maxAmount = maxAmount
         self.remainingAmount = maxAmount
-        self.throttle = throttleComponent
         
         super.init()
+
+        self.rocketEntity = rocket
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func consumeFuel(amount: Double) {
-        if remainingAmount > 0.0 {
-            remainingAmount = (0.0 ... maxAmount).clamp(remainingAmount - amount)
-        }
-    }
-    
     override func update(deltaTime seconds: TimeInterval) {
-        consumeFuel(amount: 1 * throttle.percent * seconds)
+        guard remainingAmount > 0.0, let rocket = rocketEntity else { return }
+        
+        let consumedAmount = rocket.fuelConsumptionRate() * rocket.throttlePercent * seconds
+        remainingAmount = (0.0 ... maxAmount).clamp(remainingAmount - consumedAmount)
     }
 }

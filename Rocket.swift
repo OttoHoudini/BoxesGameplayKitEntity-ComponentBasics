@@ -6,64 +6,67 @@
 //  Copyright © 2017 Apple. All rights reserved.
 //
 
-import Foundation
 import GameplayKit
 
-class Rocket {
+class RocketEntity: GKEntity {
+    
     var partEntities = [GKEntity]()
-    let throttle: ThrottleComponent
     
-    let particleComponentSystem = GKComponentSystem(componentClass: ParticleComponent.self)
-    let thrustComponentSystem = GKComponentSystem(componentClass: ThrustComponent.self)
+    var throttlePercent: Double {
+        return component(ofType: ThrottleComponent.self)!.percent
+    }
+    
+    let throttleComponentSystem = GKComponentSystem(componentClass: ThrottleComponent.self)
     let fuelComponentSystem = GKComponentSystem(componentClass: FuelComponent.self)
-    
-    init(throttleComponent: ThrottleComponent) {
-        self.throttle = throttleComponent
-        self.throttle.fuelComponentSystem = (self.fuelComponentSystem as! GKComponentSystem<FuelComponent>)
+    let thrustComponentSystem = GKComponentSystem(componentClass: ThrustComponent.self)
+    let particleComponentSystem = GKComponentSystem(componentClass: ParticleComponent.self)
 
-    }
-}
-
-class ThrottleComponent: GKComponent {
-    private let changeRate = 0.5
-    
-    var fuelComponentSystem: GKComponentSystem<FuelComponent>?
-    
-    enum State {
-        case off
-        case up
-        case down
-        case hold
+    override init() {
+        super.init()
+        
+        let throttleComponent = ThrottleComponent()
+        throttleComponentSystem.addComponent(throttleComponent)
+        self.addComponent(throttleComponent)
     }
     
-    var state = ThrottleComponent.State.off
-    var percent = 0.0
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func update(deltaTime seconds: TimeInterval) {
-        switch state {
-        case .off:
-            percent = 0.0
-            
-        case .up:
-            percent += changeRate * seconds
-            
-        case .down:
-            percent -= changeRate * seconds
-            
-        case .hold:
-            break
-        }
-        
-        percent = (0.0 ... 1.0).clamp(percent)
+        throttleComponentSystem.update(deltaTime: seconds)
+        thrustComponentSystem.update(deltaTime: seconds)
+        fuelComponentSystem.update(deltaTime: seconds)
+        particleComponentSystem.update(deltaTime: seconds)
+    }
+    
+    func setThrottleState(_ state: ThrottleComponent.State) {
+        component(ofType: ThrottleComponent.self)!.state = state
+    }
+    
+    func fuelConsumptionRate() -> Double {
+        return 1.0
     }
     
     func hasFuel() -> Bool {
         var fuelAmount = 0.0
         
-        for fuelComponent in fuelComponentSystem!.components {
+        for case let fuelComponent as FuelComponent in fuelComponentSystem.components {
             fuelAmount += fuelComponent.remainingAmount
         }
         
         return fuelAmount > 0 ? true : false
     }
 }
+
+//class RocketComponentSystem: GKComponentSystem<RocketComponent> {
+//    
+//    let rocket: RocketEntity
+//    
+//    init(rocket: RocketEntity, componentClass: GKComponent.Type) {
+//        self.rocket = rocket
+//        
+//        super.init()
+//    }
+//}
+

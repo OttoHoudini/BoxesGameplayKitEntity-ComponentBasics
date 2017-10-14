@@ -15,14 +15,8 @@ class Game: NSObject, SCNSceneRendererDelegate {
     /// The scene that the game controls.
     let scene = SCNScene(named: "GameScene.scn")!
     
-    /**
-        Manages all of the player control components, allowing you to access all
-        of them in one place.
-    */
-    let throttleComponentSystem = GKComponentSystem(componentClass: ThrottleComponent.self)
-
     /// Holds the box entities, so they won't be deallocated.
-    var currentRocket = Rocket(throttleComponent: ThrottleComponent())
+    var currentRocket = RocketEntity()
     
     /// Keeps track of the time for use in the update method.
     var previousUpdateTime: TimeInterval = 0
@@ -49,17 +43,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         
         let fuelEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsFuelComponent: true)
         
-        /*
-            Experiment for yourself:
-            Try creating and attaching a ParticleComponent and
-            PlayerControlComponent for the purple box in the space below.
-        */
-        
-        // Keep track of all the newly-created box entities.
-        currentRocket.partEntities = [
-            thrustEntity,
-            fuelEntity,
-        ]
+        currentRocket.partEntities = [thrustEntity, fuelEntity]
     }
     
     /**
@@ -70,9 +54,6 @@ class Game: NSObject, SCNSceneRendererDelegate {
         the scene unless it is added to one of these systems.
     */
     func addComponentsToComponentSystems() {
-        
-        throttleComponentSystem.addComponent(currentRocket.throttle)
-
         for partEntity in currentRocket.partEntities {
             currentRocket.particleComponentSystem.addComponent(foundIn: partEntity)
             currentRocket.thrustComponentSystem.addComponent(foundIn: partEntity)
@@ -84,10 +65,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
     // MARK: Methods
 
     func setThrottle(state: ThrottleComponent.State) {
-        currentRocket.throttle.state = state
-//        for case let component as PlayerControlComponent in controlEntity.components {
-//            component.setThrottle(state: state)
-//        }
+        currentRocket.setThrottleState(state)
     }
     
     func controlEntityWith(node: SCNNode) {
@@ -128,15 +106,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         // Calculate the time change since the previous update.
         let timeSincePreviousUpdate = time - previousUpdateTime
         
-        throttleComponentSystem.update(deltaTime: timeSincePreviousUpdate)
-        
-        // Update the thrust component system with the time change.
-        currentRocket.thrustComponentSystem.update(deltaTime: timeSincePreviousUpdate)
-        
-        currentRocket.fuelComponentSystem.update(deltaTime: timeSincePreviousUpdate)
-        
-        // Update the particle component system with the time change.
-        currentRocket.particleComponentSystem.update(deltaTime: timeSincePreviousUpdate)
+        currentRocket.update(deltaTime: timeSincePreviousUpdate)
         
         // Update the previous update time to keep future calculations accurate.
         previousUpdateTime = time
@@ -161,7 +131,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
     
         - Returns: An entity with the set of components requested.
     */
-    func makeBoxEntity(forNodeWithName name: String, wantsPlayerControlComponent: Bool = false, wantsThrustComponent: Bool = false, wantsFuelComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
+    func makeBoxEntity(forNodeWithName name: String, wantsThrustComponent: Bool = false, wantsFuelComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
         // Create the box entity and grab its node from the scene.
         let box = GKEntity()
         guard let boxNode = scene.rootNode.childNode(withName: name, recursively: false) else {
@@ -180,18 +150,12 @@ class Game: NSObject, SCNSceneRendererDelegate {
         
         // If requested, create and attach a thrust component.
         if wantsThrustComponent {
-            let thrustComponent = ThrustComponent(maxThrust: 1.125, throttleComponent: currentRocket.throttle)
+            let thrustComponent = ThrustComponent(rocketEntity: currentRocket, maxThrust: 1.125, fuelconsumptionRate: 1.0)
             box.addComponent(thrustComponent)
         }
         
-        // If requested, create and attach a player control component.
-        if wantsPlayerControlComponent {
-            let playerControlComponent = PlayerControlComponent()
-            box.addComponent(playerControlComponent)
-        }
-        
         if wantsFuelComponent {
-            let fuelComponent = FuelComponent.init(maxAmount: 10, throttleComponent: currentRocket.throttle)
+            let fuelComponent = FuelComponent(rocket: currentRocket, maxAmount: 10)
             box.addComponent(fuelComponent)
         }
         

@@ -8,12 +8,13 @@
 
 import GameplayKit
 
-class ThrustComponent: GKComponent {
+class ThrustComponent: RocketComponent {
     
     // MARK: Properties
-    let throttle: ThrottleComponent
-
+    
     let maxThrust: Double
+    
+    let fuelConsumptionRate: Double
     
     /// The direction the thrust is applied.
     let directionVector = simd_double3(0, 1, 0)
@@ -23,11 +24,13 @@ class ThrustComponent: GKComponent {
         return entity?.component(ofType: GeometryComponent.self)
     }
     
-    init(maxThrust: Double, throttleComponent: ThrottleComponent) {
+    init(rocketEntity: RocketEntity, maxThrust: Double, fuelconsumptionRate: Double) {
         self.maxThrust = maxThrust
-        self.throttle = throttleComponent
+        self.fuelConsumptionRate = fuelconsumptionRate
         
         super.init()
+        
+        self.rocketEntity = rocketEntity
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,14 +41,17 @@ class ThrustComponent: GKComponent {
     // MARK: Methods
     
     override func update(deltaTime seconds: TimeInterval) {
-   
-        if throttle.percent > 0, throttle.hasFuel()  {            
-            let thrustVector = directionVector * (throttle.percent * maxThrust)
+        guard let rocket = rocketEntity  else {
+            return
+        }
+        let throttlePercent = rocket.throttlePercent
+        
+        if rocket.hasFuel(), throttlePercent > 0.0 {
+            let thrustVector = directionVector * (throttlePercent * maxThrust)
             geometryComponent?.applyForce(SCNVector3(thrustVector), asImpulse: false)
         }
     }
 }
-
 
 extension ClosedRange {
     func clamp(_ value : Bound) -> Bound {
