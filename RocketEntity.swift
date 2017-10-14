@@ -12,14 +12,14 @@ class RocketEntity: GKEntity {
     
     var partEntities = [GKEntity]()
     
-    var throttlePercent: Double {
-        return component(ofType: ThrottleComponent.self)!.percent
+    var throttleLevel: Double {
+        return component(ofType: ThrottleComponent.self)!.level
     }
     
-    let throttleComponentSystem = GKComponentSystem(componentClass: ThrottleComponent.self)
-    let fuelComponentSystem = GKComponentSystem(componentClass: FuelComponent.self)
-    let thrustComponentSystem = GKComponentSystem(componentClass: ThrustComponent.self)
-    let particleComponentSystem = GKComponentSystem(componentClass: ParticleComponent.self)
+    let throttleComponentSystem = GKComponentSystem<ThrottleComponent>(componentClass: ThrottleComponent.self)
+    let thrustComponentSystem = GKComponentSystem<ThrustComponent>(componentClass: ThrustComponent.self)
+    let fuelTankComponentSystem = GKComponentSystem<FuelTankComponent>(componentClass: FuelTankComponent.self)
+    let particleComponentSystem = GKComponentSystem<ParticleComponent>(componentClass: ParticleComponent.self)
 
     override init() {
         super.init()
@@ -36,7 +36,7 @@ class RocketEntity: GKEntity {
     override func update(deltaTime seconds: TimeInterval) {
         throttleComponentSystem.update(deltaTime: seconds)
         thrustComponentSystem.update(deltaTime: seconds)
-        fuelComponentSystem.update(deltaTime: seconds)
+        fuelTankComponentSystem.update(deltaTime: seconds)
         particleComponentSystem.update(deltaTime: seconds)
     }
     
@@ -45,28 +45,10 @@ class RocketEntity: GKEntity {
     }
     
     func fuelConsumptionRate() -> Double {
-        return 1.0
+        return thrustComponentSystem.components.map{$0.fuelConsumptionRate}.reduce(0.0, +)
     }
     
     func hasFuel() -> Bool {
-        var fuelAmount = 0.0
-        
-        for case let fuelComponent as FuelComponent in fuelComponentSystem.components {
-            fuelAmount += fuelComponent.remainingAmount
-        }
-        
-        return fuelAmount > 0 ? true : false
+        return fuelTankComponentSystem.components.map {$0.remainingFuel}.reduce(0.0, +) > 0 ? true : false
     }
 }
-
-//class RocketComponentSystem: GKComponentSystem<RocketComponent> {
-//    
-//    let rocket: RocketEntity
-//    
-//    init(rocket: RocketEntity, componentClass: GKComponent.Type) {
-//        self.rocket = rocket
-//        
-//        super.init()
-//    }
-//}
-

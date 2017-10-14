@@ -11,6 +11,7 @@ import GameplayKit
 
 class GeometryComponent: GKSCNNodeComponent {
     
+    // MARK: -
     // MARK: Methods
     
     func applyForce(_ direction: SCNVector3, asImpulse impulse: Bool) {

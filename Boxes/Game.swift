@@ -57,7 +57,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         for partEntity in currentRocket.partEntities {
             currentRocket.particleComponentSystem.addComponent(foundIn: partEntity)
             currentRocket.thrustComponentSystem.addComponent(foundIn: partEntity)
-            currentRocket.fuelComponentSystem.addComponent(foundIn: partEntity)
+            currentRocket.fuelTankComponentSystem.addComponent(foundIn: partEntity)
         }
     }
     
@@ -155,7 +155,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         }
         
         if wantsFuelComponent {
-            let fuelComponent = FuelComponent(rocket: currentRocket, maxAmount: 10)
+            let fuelComponent = FuelTankComponent(rocket: currentRocket, maxAmount: 20)
             box.addComponent(fuelComponent)
         }
         

@@ -9,8 +9,14 @@
 import GameplayKit
 
 class ThrottleComponent: GKComponent {
+    
+    /// The rate that the throttle level can be adjusted
     private let changeRate = 1.0
-        
+    
+    /// The throttles level amount.  It is limited from 0 to 1.
+    var level = 0.0
+
+    /// The different states the throttle can be in.
     enum State {
         case off
         case up
@@ -18,27 +24,21 @@ class ThrottleComponent: GKComponent {
         case hold
     }
     
-    var state = ThrottleComponent.State.off
-    var percent = 0.0
+    /// The current state the throttle is in.
+    var state = ThrottleComponent.State.off {
+        didSet { if state == .off { level = 0.0 } }
+    }
+    
+    // MARK: -
+    // MARK: Methods
     
     override func update(deltaTime seconds: TimeInterval) {
-        switch state {
-        case .off:
-            percent = 0.0
-
-        case .up:
-            percent += changeRate * seconds
-            print("Thottleing up")
-            
-        case .down:
-            percent -= changeRate * seconds
-            print("Thottleing down")
-
-        case .hold:
-            print("Thottle: \(percent)")
-            break
-        }
+        guard state  == .up || state == .down else { return }
         
-        percent = (0.0 ... 1.0).clamp(percent)
+        let delta = state == .up ? changeRate : -changeRate
+        let newLevel = level + delta * seconds
+        
+        level = (newLevel...newLevel).clamped(to: 0...1).lowerBound
+        print("Thottle: \(level)")
     }
 }

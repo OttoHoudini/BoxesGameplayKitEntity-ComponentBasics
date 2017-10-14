@@ -10,8 +10,11 @@ import GameplayKit
 
 class RocketComponent: GKComponent {
     
-    /// A pointer to the rocket the component is used on.
+    /// A pointer to the rocket the component is attached to.
     var rocketEntity: RocketEntity?
+    
+    // MARK: -
+    // MARK: Methods
     
     init(rocket: RocketEntity? = nil) {
         self.rocketEntity = rocket

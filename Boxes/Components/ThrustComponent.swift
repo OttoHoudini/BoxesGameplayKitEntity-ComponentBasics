@@ -12,8 +12,10 @@ class ThrustComponent: RocketComponent {
     
     // MARK: Properties
     
+    /// The maximum thrust.
     let maxThrust: Double
     
+    /// The fuel consumption rate.
     let fuelConsumptionRate: Double
     
     /// The direction the thrust is applied.
@@ -23,6 +25,9 @@ class ThrustComponent: RocketComponent {
     var geometryComponent: GeometryComponent? {
         return entity?.component(ofType: GeometryComponent.self)
     }
+    
+    // MARK: -
+    // MARK: Methods
     
     init(rocketEntity: RocketEntity, maxThrust: Double, fuelconsumptionRate: Double) {
         self.maxThrust = maxThrust
@@ -37,26 +42,12 @@ class ThrustComponent: RocketComponent {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: -
-    // MARK: Methods
-    
     override func update(deltaTime seconds: TimeInterval) {
-        guard let rocket = rocketEntity  else {
+        guard let rocket = rocketEntity, rocket.throttleLevel > 0.0, rocket.hasFuel()  else {
             return
         }
-        let throttlePercent = rocket.throttlePercent
         
-        if rocket.hasFuel(), throttlePercent > 0.0 {
-            let thrustVector = directionVector * (throttlePercent * maxThrust)
-            geometryComponent?.applyForce(SCNVector3(thrustVector), asImpulse: false)
-        }
-    }
-}
-
-extension ClosedRange {
-    func clamp(_ value : Bound) -> Bound {
-        return self.lowerBound > value ? self.lowerBound
-            : self.upperBound < value ? self.upperBound
-            : value
+        let thrustVector = directionVector * (rocket.throttleLevel * maxThrust)
+        geometryComponent?.applyForce(SCNVector3(thrustVector), asImpulse: false)
     }
 }

@@ -19,9 +19,9 @@
 		11D279691BFAEA420063A526 /* Sparkle.scnp in Resources */ = {isa = PBXBuildFile; fileRef = A464404C1B4218F50075ABE4 /* Sparkle.scnp */; };
 		11D2796A1BFAEA420063A526 /* starburst.png in Resources */ = {isa = PBXBuildFile; fileRef = A478E8AD1B57328B000EB4CF /* starburst.png */; };
 		11D2796B1BFAEA420063A526 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4978FB51B41C4EF0059626E /* Assets.xcassets */; };
-		1F0A12D21F8A625300EC2BE0 /* FuelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */; };
-		1F0A12D31F8A625300EC2BE0 /* FuelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */; };
-		1F0A12D41F8A625300EC2BE0 /* FuelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */; };
+		1F0A12D21F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */; };
+		1F0A12D31F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */; };
+		1F0A12D41F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */; };
 		1F2CDAED1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
 		1F2CDAEE1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
 		1F2CDAEF1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
@@ -34,9 +34,9 @@
 		1FDE46C91F905800001BC477 /* RocketComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDE46C81F905800001BC477 /* RocketComponent.swift */; };
 		1FDE46CA1F905800001BC477 /* RocketComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDE46C81F905800001BC477 /* RocketComponent.swift */; };
 		1FDE46CB1F905800001BC477 /* RocketComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDE46C81F905800001BC477 /* RocketComponent.swift */; };
-		1FE71EC01F8C696D008B0F11 /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* Rocket.swift */; };
-		1FE71EC11F8C696D008B0F11 /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* Rocket.swift */; };
-		1FE71EC21F8C696D008B0F11 /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* Rocket.swift */; };
+		1FE71EC01F8C696D008B0F11 /* RocketEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* RocketEntity.swift */; };
+		1FE71EC11F8C696D008B0F11 /* RocketEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* RocketEntity.swift */; };
+		1FE71EC21F8C696D008B0F11 /* RocketEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE71EBF1F8C696D008B0F11 /* RocketEntity.swift */; };
 		A413E9111B41F11A00C6E371 /* ParticleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A413E9101B41F11A00C6E371 /* ParticleComponent.swift */; };
 		A413E9131B41F34B00C6E371 /* GeometryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A413E9121B41F34B00C6E371 /* GeometryComponent.swift */; };
 		A4440BB61B6C38980070765D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4440BB51B6C38980070765D /* Game.swift */; };
@@ -68,12 +68,12 @@
 		11D2794B1BFAE7E70063A526 /* Boxes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Boxes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11D279581BFAE7E70063A526 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11D2795C1BFAE7E70063A526 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelComponent.swift; sourceTree = "<group>"; };
+		1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelTankComponent.swift; sourceTree = "<group>"; };
 		1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrustComponent.swift; sourceTree = "<group>"; };
 		1FA067001F8DD8F900541A14 /* ThrottleStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleStates.swift; sourceTree = "<group>"; };
 		1FDE46C41F9052C1001BC477 /* ThrottleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleComponent.swift; sourceTree = "<group>"; };
 		1FDE46C81F905800001BC477 /* RocketComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketComponent.swift; sourceTree = "<group>"; };
-		1FE71EBF1F8C696D008B0F11 /* Rocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
+		1FE71EBF1F8C696D008B0F11 /* RocketEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketEntity.swift; sourceTree = "<group>"; };
 		A413E9101B41F11A00C6E371 /* ParticleComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleComponent.swift; sourceTree = "<group>"; };
 		A413E9121B41F34B00C6E371 /* GeometryComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometryComponent.swift; sourceTree = "<group>"; };
 		A4440BB51B6C38980070765D /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Boxes/Game.swift; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 				A413E9121B41F34B00C6E371 /* GeometryComponent.swift */,
 				1FDE46C41F9052C1001BC477 /* ThrottleComponent.swift */,
 				1FDE46C81F905800001BC477 /* RocketComponent.swift */,
-				1F0A12D11F8A625300EC2BE0 /* FuelComponent.swift */,
+				1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */,
 				1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */,
 				A413E9101B41F11A00C6E371 /* ParticleComponent.swift */,
 			);
@@ -169,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				A4440BB51B6C38980070765D /* Game.swift */,
-				1FE71EBF1F8C696D008B0F11 /* Rocket.swift */,
+				1FE71EBF1F8C696D008B0F11 /* RocketEntity.swift */,
 				A413E9051B41F04500C6E371 /* Components */,
 				1FA067041F8DD90000541A14 /* States */,
 				A4440BBC1B6C57150070765D /* Particle Effects */,
@@ -375,7 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FDE46CB1F905800001BC477 /* RocketComponent.swift in Sources */,
-				1FE71EC21F8C696D008B0F11 /* Rocket.swift in Sources */,
+				1FE71EC21F8C696D008B0F11 /* RocketEntity.swift in Sources */,
 				11D279601BFAE9E00063A526 /* AppDelegate.swift in Sources */,
 				11D279631BFAEA420063A526 /* GeometryComponent.swift in Sources */,
 				1FDE46C71F9052C1001BC477 /* ThrottleComponent.swift in Sources */,
@@ -383,7 +383,7 @@
 				11D279611BFAE9E00063A526 /* GameViewController.swift in Sources */,
 				1FA067031F8DD8F900541A14 /* ThrottleStates.swift in Sources */,
 				1F2CDAEF1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
-				1F0A12D41F8A625300EC2BE0 /* FuelComponent.swift in Sources */,
+				1F0A12D41F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */,
 				11D279651BFAEA420063A526 /* ParticleComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,14 +393,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FDE46CA1F905800001BC477 /* RocketComponent.swift in Sources */,
-				1FE71EC11F8C696D008B0F11 /* Rocket.swift in Sources */,
+				1FE71EC11F8C696D008B0F11 /* RocketEntity.swift in Sources */,
 				A4440BB61B6C38980070765D /* Game.swift in Sources */,
 				1FDE46C61F9052C1001BC477 /* ThrottleComponent.swift in Sources */,
 				A413E9131B41F34B00C6E371 /* GeometryComponent.swift in Sources */,
 				A413E9111B41F11A00C6E371 /* ParticleComponent.swift in Sources */,
 				1FA067021F8DD8F900541A14 /* ThrottleStates.swift in Sources */,
 				1F2CDAEE1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
-				1F0A12D31F8A625300EC2BE0 /* FuelComponent.swift in Sources */,
+				1F0A12D31F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */,
 				A4440BBB1B6C3C8A0070765D /* GameViewController.swift in Sources */,
 				A4978FAE1B41C4EF0059626E /* AppDelegate.swift in Sources */,
 			);
@@ -411,7 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FDE46C91F905800001BC477 /* RocketComponent.swift in Sources */,
-				1FE71EC01F8C696D008B0F11 /* Rocket.swift in Sources */,
+				1FE71EC01F8C696D008B0F11 /* RocketEntity.swift in Sources */,
 				A47E87D61B6FCD1000F9A307 /* GameViewController.swift in Sources */,
 				A47E87D51B6FCD0A00F9A307 /* AppDelegate.swift in Sources */,
 				1FDE46C51F9052C1001BC477 /* ThrottleComponent.swift in Sources */,
@@ -419,7 +419,7 @@
 				A4440BB71B6C38980070765D /* Game.swift in Sources */,
 				1FA067011F8DD8F900541A14 /* ThrottleStates.swift in Sources */,
 				1F2CDAED1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
-				1F0A12D21F8A625300EC2BE0 /* FuelComponent.swift in Sources */,
+				1F0A12D21F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */,
 				A4AA55231B69BEBC008D3323 /* ParticleComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
