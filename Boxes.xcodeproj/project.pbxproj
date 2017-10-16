@@ -22,6 +22,9 @@
 		1F0A12D21F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */; };
 		1F0A12D31F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */; };
 		1F0A12D41F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */; };
+		1F1322281F9254780013428F /* TorqueComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1322271F9254780013428F /* TorqueComponent.swift */; };
+		1F1322291F9254780013428F /* TorqueComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1322271F9254780013428F /* TorqueComponent.swift */; };
+		1F13222A1F9254780013428F /* TorqueComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1322271F9254780013428F /* TorqueComponent.swift */; };
 		1F2CDAED1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
 		1F2CDAEE1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
 		1F2CDAEF1F89D5BB00280714 /* ThrustComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */; };
@@ -69,6 +72,7 @@
 		11D279581BFAE7E70063A526 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11D2795C1BFAE7E70063A526 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelTankComponent.swift; sourceTree = "<group>"; };
+		1F1322271F9254780013428F /* TorqueComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorqueComponent.swift; sourceTree = "<group>"; };
 		1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrustComponent.swift; sourceTree = "<group>"; };
 		1FA067001F8DD8F900541A14 /* ThrottleStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleStates.swift; sourceTree = "<group>"; };
 		1FDE46C41F9052C1001BC477 /* ThrottleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleComponent.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 				1F0A12D11F8A625300EC2BE0 /* FuelTankComponent.swift */,
 				1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */,
 				A413E9101B41F11A00C6E371 /* ParticleComponent.swift */,
+				1F1322271F9254780013428F /* TorqueComponent.swift */,
 			);
 			name = Components;
 			path = Boxes/Components;
@@ -382,6 +387,7 @@
 				11D279621BFAEA420063A526 /* Game.swift in Sources */,
 				11D279611BFAE9E00063A526 /* GameViewController.swift in Sources */,
 				1FA067031F8DD8F900541A14 /* ThrottleStates.swift in Sources */,
+				1F13222A1F9254780013428F /* TorqueComponent.swift in Sources */,
 				1F2CDAEF1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
 				1F0A12D41F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */,
 				11D279651BFAEA420063A526 /* ParticleComponent.swift in Sources */,
@@ -400,6 +406,7 @@
 				A413E9111B41F11A00C6E371 /* ParticleComponent.swift in Sources */,
 				1FA067021F8DD8F900541A14 /* ThrottleStates.swift in Sources */,
 				1F2CDAEE1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
+				1F1322291F9254780013428F /* TorqueComponent.swift in Sources */,
 				1F0A12D31F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */,
 				A4440BBB1B6C3C8A0070765D /* GameViewController.swift in Sources */,
 				A4978FAE1B41C4EF0059626E /* AppDelegate.swift in Sources */,
@@ -418,6 +425,7 @@
 				A4AA55211B69BEBC008D3323 /* GeometryComponent.swift in Sources */,
 				A4440BB71B6C38980070765D /* Game.swift in Sources */,
 				1FA067011F8DD8F900541A14 /* ThrottleStates.swift in Sources */,
+				1F1322281F9254780013428F /* TorqueComponent.swift in Sources */,
 				1F2CDAED1F89D5BB00280714 /* ThrustComponent.swift in Sources */,
 				1F0A12D21F8A625300EC2BE0 /* FuelTankComponent.swift in Sources */,
 				A4AA55231B69BEBC008D3323 /* ParticleComponent.swift in Sources */,

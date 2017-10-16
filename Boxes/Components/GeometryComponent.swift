@@ -17,4 +17,8 @@ class GeometryComponent: GKSCNNodeComponent {
     func applyForce(_ direction: SCNVector3, asImpulse impulse: Bool) {
         node.physicsBody?.applyForce(direction, asImpulse: impulse)
     }
+    
+    func applyTorque(_ torque: SCNVector4, asImpulse impulse: Bool) {
+        node.physicsBody?.applyTorque(torque, asImpulse: impulse)
+    }
 }

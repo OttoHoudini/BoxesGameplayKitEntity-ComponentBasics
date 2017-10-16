@@ -8,6 +8,26 @@
 
 import SceneKit
 
+private enum TorqueDirection : UInt16 {
+    case yawLeft = 0
+    case yawRight = 2
+    case pitchUp = 13
+    case pitchDown = 1
+    case rollLeft = 12
+    case rollRight = 14
+    
+    var vector : float3 {
+        switch self {
+        case .yawLeft: return float3(0, 0, 1)
+        case .yawRight: return float3(0, 0, -1)
+        case .pitchUp: return float3(-1, 0, 0)
+        case .pitchDown: return float3(1, 0, 0)
+        case .rollLeft: return float3(0, -1, 0)
+        case .rollRight: return float3(0, 1, 0)
+        }
+    }
+}
+
 class GameViewController: NSViewController {
     // MARK: Properties
     
@@ -51,6 +71,20 @@ class GameViewController: NSViewController {
     override func keyDown(with event: NSEvent) {
         if event.characters == "z" {
             game.setThrottle(state: .off)
+        }
+        
+        if let direction = TorqueDirection(rawValue: event.keyCode), !event.isARepeat {
+            game.currentRocket.torqueDirection += direction.vector
+        }
+        
+        if let characters = event.characters, characters.contains("t"), !event.isARepeat {
+            game.currentRocket.isSASActive = !game.currentRocket.isSASActive
+        }
+    }
+    
+    override func keyUp(with event: NSEvent) {
+        if let direction = TorqueDirection(rawValue: event.keyCode), !event.isARepeat {
+            game.currentRocket.torqueDirection -= direction.vector
         }
     }
 

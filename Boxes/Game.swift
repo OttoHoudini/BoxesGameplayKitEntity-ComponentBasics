@@ -39,11 +39,11 @@ class Game: NSObject, SCNSceneRendererDelegate {
     func setUpEntities() {
         // Create entities with components using the factory method.
         
-        let thrustEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsThrustComponent: true, withParticleComponentNamed: "Fire")
+        let engineEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsTorqueComponent: true, wantsThrustComponent: true, withParticleComponentNamed: "Fire")
         
         let fuelEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsFuelComponent: true)
         
-        currentRocket.partEntities = [thrustEntity, fuelEntity]
+        currentRocket.partEntities = [engineEntity, fuelEntity]
     }
     
     /**
@@ -55,6 +55,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
     */
     func addComponentsToComponentSystems() {
         for partEntity in currentRocket.partEntities {
+            currentRocket.torqueComponentSystem.addComponent(foundIn: partEntity)
             currentRocket.particleComponentSystem.addComponent(foundIn: partEntity)
             currentRocket.thrustComponentSystem.addComponent(foundIn: partEntity)
             currentRocket.fuelTankComponentSystem.addComponent(foundIn: partEntity)
@@ -67,6 +68,10 @@ class Game: NSObject, SCNSceneRendererDelegate {
     func setThrottle(state: ThrottleComponent.State) {
         currentRocket.setThrottleState(state)
     }
+//    
+//    func updateTorqueDirection(_ direction: simd_float3) {
+//        currentRocket.torqueDirection = direction
+//    }
     
     func controlEntityWith(node: SCNNode) {
 //        if let partEntity = rocket.partEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
@@ -131,7 +136,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
     
         - Returns: An entity with the set of components requested.
     */
-    func makeBoxEntity(forNodeWithName name: String, wantsThrustComponent: Bool = false, wantsFuelComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
+    func makeBoxEntity(forNodeWithName name: String, wantsTorqueComponent: Bool = false, wantsThrustComponent: Bool = false, wantsFuelComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
         // Create the box entity and grab its node from the scene.
         let box = GKEntity()
         guard let boxNode = scene.rootNode.childNode(withName: name, recursively: false) else {
@@ -157,6 +162,11 @@ class Game: NSObject, SCNSceneRendererDelegate {
         if wantsFuelComponent {
             let fuelComponent = FuelTankComponent(rocket: currentRocket, maxAmount: 20)
             box.addComponent(fuelComponent)
+        }
+        
+        if wantsTorqueComponent {
+            let torqueComponent = TorqueComponent(magnitude: 0.125, angularDamping: 0.125)
+            box.addComponent(torqueComponent)
         }
         
         return box
