@@ -33,8 +33,8 @@ class TorqueComponent: GKComponent {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func toggelAngularDamping() {
-        geometryComponent?.node.physicsBody?.angularDamping = geometryComponent?.node.physicsBody?.angularDamping == 0.0 ? angularDamping : 0.0
+    func setAngularDamping(active: Bool) {
+        geometryComponent?.node.physicsBody?.angularDamping = active ? angularDamping : 0.0
     }
     
     override func update(deltaTime seconds: TimeInterval) {

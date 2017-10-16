@@ -19,16 +19,15 @@ class RocketEntity: GKEntity {
     }
     
     var torqueDirection = simd_float3() {
-        didSet {
-            print("DidSet Torque:  \(torqueDirection)")
-            let _ = torqueComponentSystem.components.map() { $0.direction = torqueDirection }
+        didSet { let _ = torqueComponentSystem.components.map() {
+            $0.direction = torqueDirection }
         }
     }
     
     var isSASActive = false {
         didSet {
-            if isSASActive {
-                let _ = torqueComponentSystem.components.map() { $0.toggelAngularDamping() }
+            let _ = torqueComponentSystem.components.map() {
+                $0.setAngularDamping(active: isSASActive)
             }
         }
     }
@@ -54,10 +53,6 @@ class RocketEntity: GKEntity {
     func setThrottleState(_ state: ThrottleComponent.State) {
         throttleComponent?.state = state
     }
-    
-//    func updateTorqueDirection(_ direction: SCNVector3) {
-//        let _ = torqueComponentSystem.components.map() { $0.direction = direction }
-//    }
     
     func fuelConsumptionRate() -> Double {
         return thrustComponentSystem.components.map{$0.fuelConsumptionRate}.reduce(0.0, +)

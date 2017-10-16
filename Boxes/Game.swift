@@ -68,16 +68,8 @@ class Game: NSObject, SCNSceneRendererDelegate {
     func setThrottle(state: ThrottleComponent.State) {
         currentRocket.setThrottleState(state)
     }
-//    
-//    func updateTorqueDirection(_ direction: simd_float3) {
-//        currentRocket.torqueDirection = direction
-//    }
     
     func controlEntityWith(node: SCNNode) {
-//        if let partEntity = rocket.partEntities.first(where: {$0.component(ofType: GeometryComponent.self)?.node == node}) {
-//            currentRocket = partEntity
-//            highlight(node: node)
-//        }
     }
     
     func highlight(node: SCNNode) {
@@ -137,6 +129,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         - Returns: An entity with the set of components requested.
     */
     func makeBoxEntity(forNodeWithName name: String, wantsTorqueComponent: Bool = false, wantsThrustComponent: Bool = false, wantsFuelComponent: Bool = false, withParticleComponentNamed particleComponentName: String? = nil) -> GKEntity {
+        
         // Create the box entity and grab its node from the scene.
         let box = GKEntity()
         guard let boxNode = scene.rootNode.childNode(withName: name, recursively: false) else {
@@ -165,7 +158,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         }
         
         if wantsTorqueComponent {
-            let torqueComponent = TorqueComponent(magnitude: 0.125, angularDamping: 0.125)
+            let torqueComponent = TorqueComponent(magnitude: 0.2, angularDamping: 0.125)
             box.addComponent(torqueComponent)
         }
         
