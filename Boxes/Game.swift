@@ -9,6 +9,12 @@
 import SceneKit
 import GameplayKit
 
+let BitmaskRocketCamera     = Int(1 << 2)
+let BitmaskNavigationCamera = Int(1 << 3)
+let BitmaskMapCamera        = Int(1 << 4)
+let BitmaskGround           = Int(1 << 5)
+let BitmaskPart             = Int(1 << 6)
+
 class Game: NSObject, SCNSceneRendererDelegate {
     // MARK: Properties
     
@@ -38,10 +44,28 @@ class Game: NSObject, SCNSceneRendererDelegate {
     */
     func setUpEntities() {
         // Create entities with components using the factory method.
+        let ground = scene.rootNode.childNode(withName: "floor", recursively: true)!
+        ground.physicsBody?.categoryBitMask = BitmaskGround
+        ground.physicsBody?.collisionBitMask = BitmaskPart
         
         let engineEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsTorqueComponent: true, wantsThrustComponent: true, withParticleComponentNamed: "Fire")
         
         let fuelEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsFuelComponent: true)
+        
+        let fuelNode  = fuelEntity.component(ofType: GeometryComponent.self)!.node
+        let engineNode = engineEntity.component(ofType: GeometryComponent.self)!.node
+        fuelNode.position = SCNVector3(0, 1.5, 0)
+        engineNode.position = SCNVector3(0, 0.5, 0)
+
+        fuelNode.physicsBody?.categoryBitMask = BitmaskPart
+        fuelNode.physicsBody?.collisionBitMask = BitmaskGround
+        
+        engineNode.physicsBody?.categoryBitMask = BitmaskPart
+        engineNode.physicsBody?.collisionBitMask = BitmaskGround
+        
+        let joint = SCNPhysicsSliderJoint.fixed(bodyA: fuelNode.physicsBody!, axisA: SCNVector3(0, 1,0), anchorA: SCNVector3(0, -0.5, 0), bodyB: engineNode.physicsBody!, axisB: SCNVector3(0, 1, 0), anchorB: SCNVector3(0, 0.5, 0))
+        
+        scene.physicsWorld.addBehavior(joint)
         
         currentRocket.partEntities = [engineEntity, fuelEntity]
     }
@@ -148,7 +172,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         
         // If requested, create and attach a thrust component.
         if wantsThrustComponent {
-            let thrustComponent = ThrustComponent(rocketEntity: currentRocket, maxThrust: 1.125, fuelconsumptionRate: 1.0)
+            let thrustComponent = ThrustComponent(rocketEntity: currentRocket, maxThrust: 2.125, fuelconsumptionRate: 1.0)
             box.addComponent(thrustComponent)
         }
         

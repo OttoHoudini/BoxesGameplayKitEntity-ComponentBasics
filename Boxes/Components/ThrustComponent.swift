@@ -47,7 +47,9 @@ class ThrustComponent: RocketComponent {
             return
         }
         
-        let thrustVector = directionVector * (throttleComponent.level * maxThrust)
+        let vector = geometryComponent!.node.presentation.worldTransform * SCNVector3(directionVector)
+
+        let thrustVector = simd_double3(vector) * (throttleComponent.level * maxThrust)
         geometryComponent?.applyForce(SCNVector3(thrustVector), asImpulse: false)
     }
 }
