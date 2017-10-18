@@ -35,9 +35,9 @@ class FuelTankComponent: RocketComponent {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        guard remainingFuel > 0.0, let rocket = rocketEntity, let throttleComponent = rocket.throttleComponent else { return }
+        guard remainingFuel > 0.0, let rocket = rocketEntity else { return }
         
-        let consumedFuel = throttleComponent.level * rocket.fuelConsumptionRate() * seconds
+        let consumedFuel = rocket.throttleComponent.level * rocket.fuelConsumptionRate() * seconds
         let newRemainingFuel = remainingFuel - consumedFuel
         
         remainingFuel = newRemainingFuel < 0 ? 0.0 : newRemainingFuel

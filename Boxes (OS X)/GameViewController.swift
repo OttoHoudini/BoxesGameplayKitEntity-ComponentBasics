@@ -38,6 +38,7 @@ class GameViewController: NSViewController {
     override func viewDidLoad() {
         // Grab the controller's view as a SceneKit view.
         guard let scnView = view as? SCNView else { fatalError("Unexpected view class") }
+        scnView.rendersContinuously = true
         
         // Set our background color to a light gray color.
         scnView.backgroundColor = NSColor.lightGray
@@ -58,19 +59,19 @@ class GameViewController: NSViewController {
     
     override func flagsChanged(with event: NSEvent) {
         if event.modifierFlags.contains(.shift) {
-            game.setThrottle(state: .up)
+            game.currentRocket.setThrottleState(.up)
 
         } else if event.modifierFlags.contains(.control) {
-            game.setThrottle(state: .down)
+            game.currentRocket.setThrottleState(.down)
 
         } else {
-            game.setThrottle(state: .hold)
+            game.currentRocket.setThrottleState(.hold)
         }
     }
     
     override func keyDown(with event: NSEvent) {
-        if event.characters == "z" {
-            game.setThrottle(state: .off)
+        if event.characters == "z", !event.isARepeat {
+            game.currentRocket.setThrottleState(.off)
         }
         
         if let direction = TorqueDirection(rawValue: event.keyCode), !event.isARepeat {

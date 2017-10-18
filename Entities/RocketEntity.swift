@@ -14,8 +14,8 @@ class RocketEntity: GKEntity {
     
     var partEntities = [GKEntity]()
     
-    var throttleComponent: ThrottleComponent? {
-        return component(ofType: ThrottleComponent.self)
+    var throttleComponent: ThrottleComponent {
+        return component(ofType: ThrottleComponent.self)!
     }
     
     var torqueDirection = simd_float3() {
@@ -25,8 +25,7 @@ class RocketEntity: GKEntity {
     }
     
     var isSASActive = false {
-        didSet {
-            let _ = torqueComponentSystem.components.map() {
+        didSet { let _ = torqueComponentSystem.components.map() {
                 $0.setAngularDamping(active: isSASActive)
             }
         }
@@ -51,7 +50,9 @@ class RocketEntity: GKEntity {
     }
     
     func setThrottleState(_ state: ThrottleComponent.State) {
-        throttleComponent?.state = state
+        print("Set Thottle state: \(state)")
+        
+        self.throttleComponent.state = state
     }
     
     func fuelConsumptionRate() -> Double {
@@ -63,7 +64,7 @@ class RocketEntity: GKEntity {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        throttleComponent?.update(deltaTime: seconds)
+        throttleComponent.update(deltaTime: seconds)
         torqueComponentSystem.update(deltaTime: seconds)
         torqueComponentSystem.update(deltaTime: seconds)
         thrustComponentSystem.update(deltaTime: seconds)

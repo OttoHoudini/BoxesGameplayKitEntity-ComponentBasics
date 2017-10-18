@@ -44,26 +44,27 @@ class Game: NSObject, SCNSceneRendererDelegate {
     */
     func setUpEntities() {
         // Create entities with components using the factory method.
+        
         let ground = scene.rootNode.childNode(withName: "floor", recursively: true)!
         ground.physicsBody?.categoryBitMask = BitmaskGround
         ground.physicsBody?.collisionBitMask = BitmaskPart
         
-        let engineEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsTorqueComponent: true, wantsThrustComponent: true, withParticleComponentNamed: "Fire")
-        
+        let engineEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsThrustComponent: true)
         let fuelEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsFuelComponent: true)
         
-        let fuelNode  = fuelEntity.component(ofType: GeometryComponent.self)!.node
-        let engineNode = engineEntity.component(ofType: GeometryComponent.self)!.node
-        fuelNode.position = SCNVector3(0, 1.5, 0)
-        engineNode.position = SCNVector3(0, 0.5, 0)
+        let yAxis = simd_float3(0, 1, 0)
 
-        fuelNode.physicsBody?.categoryBitMask = BitmaskPart
-        fuelNode.physicsBody?.collisionBitMask = BitmaskGround
+        let engineGeometryComponent = engineEntity.component(ofType: GeometryComponent.self)!
+        let engineTop = engineGeometryComponent.boundingBoxAnchor()
+            engineGeometryComponent.node.simdPosition = engineTop
         
-        engineNode.physicsBody?.categoryBitMask = BitmaskPart
-        engineNode.physicsBody?.collisionBitMask = BitmaskGround
-        
-        let joint = SCNPhysicsSliderJoint.fixed(bodyA: fuelNode.physicsBody!, axisA: SCNVector3(0, 1,0), anchorA: SCNVector3(0, -0.5, 0), bodyB: engineNode.physicsBody!, axisB: SCNVector3(0, 1, 0), anchorB: SCNVector3(0, 0.5, 0))
+        let fuelGeometryComponent  = fuelEntity.component(ofType: GeometryComponent.self)!
+        let fuelBottom = fuelGeometryComponent.boundingBoxAnchor(-1 * yAxis)
+            fuelGeometryComponent.node.simdPosition = 1.5 * (engineTop - fuelBottom)
+
+        let joint = SCNPhysicsSliderJoint.fixed(
+            bodyA: fuelGeometryComponent.node.physicsBody!, axisA: SCNVector3(yAxis), anchorA: SCNVector3(fuelBottom),
+            bodyB: engineGeometryComponent.node.physicsBody!, axisB: SCNVector3(yAxis), anchorB: SCNVector3(engineTop))
         
         scene.physicsWorld.addBehavior(joint)
         
@@ -89,9 +90,10 @@ class Game: NSObject, SCNSceneRendererDelegate {
     // MARK: -
     // MARK: Methods
 
-    func setThrottle(state: ThrottleComponent.State) {
-        currentRocket.setThrottleState(state)
-    }
+//    func setThrottle(state: ThrottleComponent.State) {
+//        print("Set Throttle state: \(state)")
+//        currentRocket.setThrottleState(state)
+//    }
     
     func controlEntityWith(node: SCNNode) {
     }
@@ -172,7 +174,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         
         // If requested, create and attach a thrust component.
         if wantsThrustComponent {
-            let thrustComponent = ThrustComponent(rocketEntity: currentRocket, maxThrust: 2.125, fuelconsumptionRate: 1.0)
+            let thrustComponent = ThrustComponent(rocketEntity: currentRocket, maxThrust: 3.25, fuelconsumptionRate: 1.0)
             box.addComponent(thrustComponent)
         }
         

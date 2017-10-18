@@ -43,13 +43,13 @@ class ThrustComponent: RocketComponent {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        guard let rocket = rocketEntity, let throttleComponent = rocket.throttleComponent, throttleComponent.level > 0.0, rocket.hasFuel()  else {
+        guard let rocket = rocketEntity, rocket.throttleComponent.level > 0.0, rocket.hasFuel()  else {
             return
         }
         
         let vector = geometryComponent!.node.presentation.worldTransform * SCNVector3(directionVector)
 
-        let thrustVector = simd_double3(vector) * (throttleComponent.level * maxThrust)
+        let thrustVector = simd_double3(vector) * (rocket.throttleComponent.level * maxThrust)
         geometryComponent?.applyForce(SCNVector3(thrustVector), asImpulse: false)
     }
 }
