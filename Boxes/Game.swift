@@ -34,7 +34,6 @@ class Game: NSObject, SCNSceneRendererDelegate {
         super.init()
         
         setUpEntities()
-        addComponentsToComponentSystems()
     }
     
     /**
@@ -85,27 +84,8 @@ class Game: NSObject, SCNSceneRendererDelegate {
         currentRocket.partEntities = [engineEntity, fuelEntity, controlEntity]
     }
     
-    /**
-        Checks each box for components. If a box has a particle and/or player
-        control component, it is added to the appropriate component system.
-        Since the methods `jumpBoxes(_:)` and `renderer(_:)` use component
-        systems to reference components, a component will not properly affect
-        the scene unless it is added to one of these systems.
-    */
-    func addComponentsToComponentSystems() {
-        for partEntity in currentRocket.partEntities {
-            currentRocket.torqueComponentSystem.addComponent(foundIn: partEntity)
-            currentRocket.particleComponentSystem.addComponent(foundIn: partEntity)
-            currentRocket.thrustComponentSystem.addComponent(foundIn: partEntity)
-            currentRocket.fuelTankComponentSystem.addComponent(foundIn: partEntity)
-        }
-    }
-    
     // MARK: -
     // MARK: Methods
-    
-    func controlEntityWith(node: SCNNode) {
-    }
     
     func highlight(node: SCNNode) {
         // get its material

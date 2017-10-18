@@ -12,7 +12,16 @@ class RocketEntity: GKEntity {
     
     //MARK: Properties
     
-    var partEntities = [GKEntity]()
+    var partEntities = [GKEntity]() {
+        didSet {
+            for partEntity in partEntities {
+                torqueComponentSystem.addComponent(foundIn: partEntity)
+                particleComponentSystem.addComponent(foundIn: partEntity)
+                thrustComponentSystem.addComponent(foundIn: partEntity)
+                fuelTankComponentSystem.addComponent(foundIn: partEntity)
+            }
+        }
+    }
     
     var throttleComponent: ThrottleComponent {
         return component(ofType: ThrottleComponent.self)!
