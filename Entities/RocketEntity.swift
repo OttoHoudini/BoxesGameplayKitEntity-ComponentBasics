@@ -21,12 +21,14 @@ class RocketEntity: GKEntity {
     var torqueDirection = simd_float3() {
         didSet { let _ = torqueComponentSystem.components.map() {
             $0.direction = torqueDirection }
+            print("DidSet Torque Direction: \(torqueDirection)")
         }
     }
     
     var isSASActive = false {
         didSet { let _ = torqueComponentSystem.components.map() {
-                $0.setAngularDamping(active: isSASActive)
+            $0.setAngularDamping(active: isSASActive)
+            print("DidSet SAS: \(isSASActive)")
             }
         }
     }

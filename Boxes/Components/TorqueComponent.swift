@@ -38,8 +38,7 @@ class TorqueComponent: GKComponent {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        guard direction != simd_float3(), let geometryNode = geometryComponent else { print("not applying torque")
-            return }
+        guard direction != simd_float3(), let geometryNode = geometryComponent else { return }
         
         let torqueAxis = geometryNode.node.presentation.worldTransform * SCNVector3(direction)
         let torque = SCNVector4(torqueAxis.x, torqueAxis.y, torqueAxis.z, magnitude)

@@ -13,7 +13,7 @@ class GeometryComponent: GKSCNNodeComponent {
     
     // MARK: -
     // MARK: Methods
-    
+        
     override init(node: SCNNode) {
         node.physicsBody?.categoryBitMask = BitmaskPart
         node.physicsBody?.collisionBitMask = BitmaskGround
