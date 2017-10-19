@@ -60,6 +60,37 @@ class RocketEntity: GKEntity {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupJoints(_ scene: SCNScene) {
+        var previousEntity: GKEntity?
+        let yAxis = simd_float3(0, 1, 0)
+
+        for entity in partEntities {
+            let geometryComponent = entity.component(ofType: GeometryComponent.self)!
+            let bottomAnchor = geometryComponent.boundingBoxAnchor(-1 * yAxis)
+            
+            var previousPhysicsBody: SCNPhysicsBody?
+            var previousEntityTopAnchor = simd_float3()
+
+            if let bodyAEntity = previousEntity {
+                let bottomGeometryComponent = bodyAEntity.component(ofType: GeometryComponent.self)!
+                previousEntityTopAnchor = bottomGeometryComponent.boundingBoxAnchor()
+                previousPhysicsBody = bottomGeometryComponent.node.physicsBody
+                
+                let joint = SCNPhysicsSliderJoint.fixed(
+                    bodyA: previousPhysicsBody!, axisA: SCNVector3(yAxis), anchorA: SCNVector3(previousEntityTopAnchor),
+                    bodyB: geometryComponent.node.physicsBody!, axisB: SCNVector3(yAxis), anchorB: SCNVector3(bottomAnchor))
+                
+                scene.physicsWorld.addBehavior(joint)
+                
+                previousEntityTopAnchor = bottomGeometryComponent.node.simdConvertPosition(previousEntityTopAnchor, to: scene.rootNode)
+            }
+            
+            geometryComponent.node.simdPosition = previousEntityTopAnchor - bottomAnchor
+            
+            previousEntity = entity
+        }
+    }
+    
     func setThrottleState(_ state: ThrottleComponent.State) {
         print("Set Thottle state: \(state)")
         

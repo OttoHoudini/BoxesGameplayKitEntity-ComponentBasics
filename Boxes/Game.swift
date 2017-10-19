@@ -48,40 +48,12 @@ class Game: NSObject, SCNSceneRendererDelegate {
         ground.physicsBody?.categoryBitMask = BitmaskGround
         ground.physicsBody?.collisionBitMask = BitmaskPart
         
-        let engineEntity = makeBoxEntity(forNodeWithName: "yellowBox", wantsThrustComponent: true)
-        let fuelEntity = makeBoxEntity(forNodeWithName: "blueBox", wantsFuelComponent: true)
+        let engineEntity = makeBoxEntity(forNodeWithName: "engine", wantsThrustComponent: true)
+        let fuelTankEntity = makeBoxEntity(forNodeWithName: "fuelTank", wantsFuelComponent: true)
+        let controlEntity = makeBoxEntity(forNodeWithName: "pod", wantsTorqueComponent: true)
 
-        let yAxis = simd_float3(0, 1, 0)
-
-        let engineGeometryComponent = engineEntity.component(ofType: GeometryComponent.self)!
-        let engineTop = engineGeometryComponent.boundingBoxAnchor()
-        let engineBottom = engineGeometryComponent.boundingBoxAnchor(-1 * yAxis)
-            engineGeometryComponent.node.simdPosition = simd_float3() - engineBottom
-        
-        let fuelGeometryComponent  = fuelEntity.component(ofType: GeometryComponent.self)!
-        let fuelTop = fuelGeometryComponent.boundingBoxAnchor()
-        let fuelBottom = fuelGeometryComponent.boundingBoxAnchor(-1 * yAxis)
-            fuelGeometryComponent.node.simdPosition = engineGeometryComponent.node.simdConvertPosition(engineTop, to: scene.rootNode) - fuelBottom
-
-        let joint = SCNPhysicsSliderJoint.fixed(
-            bodyA: fuelGeometryComponent.node.physicsBody!, axisA: SCNVector3(yAxis), anchorA: SCNVector3(fuelBottom),
-            bodyB: engineGeometryComponent.node.physicsBody!, axisB: SCNVector3(yAxis), anchorB: SCNVector3(engineTop))
-        
-        scene.physicsWorld.addBehavior(joint)
-        
-        let controlEntity = makeBoxEntity(forNodeWithName: "greenBox", wantsTorqueComponent: true)
-        let controlGeometryComponent = controlEntity.component(ofType: GeometryComponent.self)!
-        let controlBottom = controlGeometryComponent.boundingBoxAnchor(-1 * yAxis)
-        controlGeometryComponent.node.simdPosition = fuelGeometryComponent.node.simdPosition
-            controlGeometryComponent.node.simdPosition = fuelGeometryComponent.node.simdConvertPosition(fuelTop, to: scene.rootNode) - controlBottom
-        
-        let joint2 = SCNPhysicsSliderJoint.fixed(
-            bodyA: fuelGeometryComponent.node.physicsBody!, axisA: SCNVector3(yAxis), anchorA: SCNVector3(fuelTop),
-            bodyB: controlGeometryComponent.node.physicsBody!, axisB: SCNVector3(yAxis), anchorB: SCNVector3(controlBottom))
-
-        scene.physicsWorld.addBehavior(joint2)
-
-        currentRocket.partEntities = [engineEntity, fuelEntity, controlEntity]
+        currentRocket.partEntities = [engineEntity, fuelTankEntity, controlEntity]
+        currentRocket.setupJoints(scene)
     }
     
     // MARK: -
