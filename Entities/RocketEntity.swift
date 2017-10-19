@@ -61,33 +61,33 @@ class RocketEntity: GKEntity {
     }
     
     func setupJoints(_ scene: SCNScene) {
-        var previousEntity: GKEntity?
+        var lowerNode: SCNNode?
         let yAxis = simd_float3(0, 1, 0)
 
         for entity in partEntities {
-            let geometryComponent = entity.component(ofType: GeometryComponent.self)!
-            let bottomAnchor = geometryComponent.boundingBoxAnchor(-1 * yAxis)
-            
-            var previousPhysicsBody: SCNPhysicsBody?
-            var previousEntityTopAnchor = simd_float3()
+            guard let nodeA = entity.component(ofType: GeometryComponent.self)?.node,
+                let physicsBodyA = nodeA.physicsBody else { return }
 
-            if let bodyAEntity = previousEntity {
-                let bottomGeometryComponent = bodyAEntity.component(ofType: GeometryComponent.self)!
-                previousEntityTopAnchor = bottomGeometryComponent.boundingBoxAnchor()
-                previousPhysicsBody = bottomGeometryComponent.node.physicsBody
+            var bodyBTopAnchor = simd_float3()
+
+            if let nodeB = lowerNode {
+                guard  let physicsBodyB = nodeB.physicsBody else { return }
+                
+                let bodyABottonAnchor = nodeA.boundingBoxAnchor(-1 * yAxis)
+                bodyBTopAnchor = nodeB.boundingBoxAnchor()
                 
                 let joint = SCNPhysicsSliderJoint.fixed(
-                    bodyA: previousPhysicsBody!, axisA: SCNVector3(yAxis), anchorA: SCNVector3(previousEntityTopAnchor),
-                    bodyB: geometryComponent.node.physicsBody!, axisB: SCNVector3(yAxis), anchorB: SCNVector3(bottomAnchor))
+                    bodyA: physicsBodyA, axisA: SCNVector3(yAxis), anchorA: SCNVector3(bodyABottonAnchor),
+                    bodyB: physicsBodyB, axisB: SCNVector3(yAxis), anchorB: SCNVector3(bodyBTopAnchor))
                 
                 scene.physicsWorld.addBehavior(joint)
                 
-                previousEntityTopAnchor = bottomGeometryComponent.node.simdConvertPosition(previousEntityTopAnchor, to: scene.rootNode)
+                bodyBTopAnchor = nodeB.simdConvertPosition(bodyBTopAnchor, to: scene.rootNode)
             }
             
-            geometryComponent.node.simdPosition = previousEntityTopAnchor - bottomAnchor
+            nodeA.simdPosition = bodyBTopAnchor - nodeA.boundingBoxAnchor(-1 * yAxis)
             
-            previousEntity = entity
+            lowerNode = nodeA
         }
     }
     
