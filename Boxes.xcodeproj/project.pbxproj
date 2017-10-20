@@ -31,9 +31,6 @@
 		1F7CED601F9541E60065C435 /* SceneKit Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CED5F1F9541E60065C435 /* SceneKit Extensions.swift */; };
 		1F7CED611F9541E60065C435 /* SceneKit Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CED5F1F9541E60065C435 /* SceneKit Extensions.swift */; };
 		1F7CED621F9541E60065C435 /* SceneKit Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CED5F1F9541E60065C435 /* SceneKit Extensions.swift */; };
-		1F7CED651F95AD6D0065C435 /* PartEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CED641F95AD6D0065C435 /* PartEntity.swift */; };
-		1F7CED661F95AD6D0065C435 /* PartEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CED641F95AD6D0065C435 /* PartEntity.swift */; };
-		1F7CED671F95AD6D0065C435 /* PartEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CED641F95AD6D0065C435 /* PartEntity.swift */; };
 		1FA067011F8DD8F900541A14 /* ThrottleStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA067001F8DD8F900541A14 /* ThrottleStates.swift */; };
 		1FA067021F8DD8F900541A14 /* ThrottleStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA067001F8DD8F900541A14 /* ThrottleStates.swift */; };
 		1FA067031F8DD8F900541A14 /* ThrottleStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA067001F8DD8F900541A14 /* ThrottleStates.swift */; };
@@ -81,7 +78,6 @@
 		1F1322271F9254780013428F /* TorqueComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorqueComponent.swift; sourceTree = "<group>"; };
 		1F2CDAEC1F89D5BB00280714 /* ThrustComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrustComponent.swift; sourceTree = "<group>"; };
 		1F7CED5F1F9541E60065C435 /* SceneKit Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SceneKit Extensions.swift"; path = "Boxes/SceneKit Extensions.swift"; sourceTree = "<group>"; };
-		1F7CED641F95AD6D0065C435 /* PartEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PartEntity.swift; path = Boxes/PartEntity.swift; sourceTree = SOURCE_ROOT; };
 		1FA067001F8DD8F900541A14 /* ThrottleStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleStates.swift; sourceTree = "<group>"; };
 		1FDE46C41F9052C1001BC477 /* ThrottleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleComponent.swift; sourceTree = "<group>"; };
 		1FDE46C81F905800001BC477 /* RocketComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketComponent.swift; sourceTree = "<group>"; };
@@ -147,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				1FE71EBF1F8C696D008B0F11 /* RocketEntity.swift */,
-				1F7CED641F95AD6D0065C435 /* PartEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -400,7 +395,6 @@
 				1FDE46CB1F905800001BC477 /* RocketComponent.swift in Sources */,
 				1FE71EC21F8C696D008B0F11 /* RocketEntity.swift in Sources */,
 				11D279601BFAE9E00063A526 /* AppDelegate.swift in Sources */,
-				1F7CED671F95AD6D0065C435 /* PartEntity.swift in Sources */,
 				11D279631BFAEA420063A526 /* GeometryComponent.swift in Sources */,
 				1FDE46C71F9052C1001BC477 /* ThrottleComponent.swift in Sources */,
 				1F7CED621F9541E60065C435 /* SceneKit Extensions.swift in Sources */,
@@ -421,7 +415,6 @@
 				1FDE46CA1F905800001BC477 /* RocketComponent.swift in Sources */,
 				1FE71EC11F8C696D008B0F11 /* RocketEntity.swift in Sources */,
 				A4440BB61B6C38980070765D /* Game.swift in Sources */,
-				1F7CED661F95AD6D0065C435 /* PartEntity.swift in Sources */,
 				1FDE46C61F9052C1001BC477 /* ThrottleComponent.swift in Sources */,
 				A413E9131B41F34B00C6E371 /* GeometryComponent.swift in Sources */,
 				1F7CED611F9541E60065C435 /* SceneKit Extensions.swift in Sources */,
@@ -442,7 +435,6 @@
 				1FDE46C91F905800001BC477 /* RocketComponent.swift in Sources */,
 				1FE71EC01F8C696D008B0F11 /* RocketEntity.swift in Sources */,
 				A47E87D61B6FCD1000F9A307 /* GameViewController.swift in Sources */,
-				1F7CED651F95AD6D0065C435 /* PartEntity.swift in Sources */,
 				A47E87D51B6FCD0A00F9A307 /* AppDelegate.swift in Sources */,
 				1FDE46C51F9052C1001BC477 /* ThrottleComponent.swift in Sources */,
 				1F7CED601F9541E60065C435 /* SceneKit Extensions.swift in Sources */,

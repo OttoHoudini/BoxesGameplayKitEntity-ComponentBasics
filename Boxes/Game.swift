@@ -48,7 +48,7 @@ class Game: NSObject, SCNSceneRendererDelegate {
         ground.physicsBody?.categoryBitMask = BitmaskGround
         ground.physicsBody?.collisionBitMask = BitmaskPart
         
-        let engineEntity = makeBoxEntity(forNodeWithName: "engine", wantsThrustComponent: true)
+        let engineEntity = makeBoxEntity(forNodeWithName: "engine", wantsThrustComponent: true, withParticleComponentNamed: "Fire")
         let fuelTankEntity = makeBoxEntity(forNodeWithName: "fuelTank", wantsFuelComponent: true)
         let controlEntity = makeBoxEntity(forNodeWithName: "pod", wantsTorqueComponent: true)
 

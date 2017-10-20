@@ -10,11 +10,16 @@ import SpriteKit
 import SceneKit
 import GameplayKit
 
-class ParticleComponent: GKComponent {
+class ParticleComponent: RocketComponent {
     // MARK: Properties
 
     /// A convenience property to access the entity's geometry component.
     var geometryComponent: GeometryComponent? {
+        return entity?.component(ofType: GeometryComponent.self)
+    }
+    
+    /// A convenience property for the entity's geometry component.
+    var thrustComponent: GeometryComponent? {
         return entity?.component(ofType: GeometryComponent.self)
     }
     
@@ -101,7 +106,7 @@ class ParticleComponent: GKComponent {
         if let geometryComponent = geometryComponent, !boxHasParticleEffect {
             geometryComponent.node.addParticleSystem(particleEmitter)
             geometryComponent.node.light = boxLight
-        }
+        } 
         
         /*
             Update the flag indicating if the particle effect has been attached 
